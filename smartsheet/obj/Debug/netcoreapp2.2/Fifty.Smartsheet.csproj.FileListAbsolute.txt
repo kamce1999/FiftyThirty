@@ -1,0 +1,9 @@
+C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\smartsheet\bin\Debug\netcoreapp2.2\Fifty.Smartsheet.deps.json
+C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\smartsheet\bin\Debug\netcoreapp2.2\Fifty.Smartsheet.dll
+C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\smartsheet\bin\Debug\netcoreapp2.2\Fifty.Smartsheet.pdb
+C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\smartsheet\obj\Debug\netcoreapp2.2\Fifty.Smartsheet.csprojAssemblyReference.cache
+C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\smartsheet\obj\Debug\netcoreapp2.2\Fifty.Smartsheet.csproj.CoreCompileInputs.cache
+C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\smartsheet\obj\Debug\netcoreapp2.2\Fifty.Smartsheet.AssemblyInfoInputs.cache
+C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\smartsheet\obj\Debug\netcoreapp2.2\Fifty.Smartsheet.AssemblyInfo.cs
+C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\smartsheet\obj\Debug\netcoreapp2.2\Fifty.Smartsheet.dll
+C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\smartsheet\obj\Debug\netcoreapp2.2\Fifty.Smartsheet.pdb

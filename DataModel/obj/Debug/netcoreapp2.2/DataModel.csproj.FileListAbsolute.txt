@@ -1,0 +1,9 @@
+C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\DataModel\bin\Debug\netcoreapp2.2\DataModel.deps.json
+C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\DataModel\bin\Debug\netcoreapp2.2\DataModel.dll
+C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\DataModel\bin\Debug\netcoreapp2.2\DataModel.pdb
+C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\DataModel\obj\Debug\netcoreapp2.2\DataModel.csproj.CoreCompileInputs.cache
+C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\DataModel\obj\Debug\netcoreapp2.2\DataModel.AssemblyInfoInputs.cache
+C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\DataModel\obj\Debug\netcoreapp2.2\DataModel.AssemblyInfo.cs
+C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\DataModel\obj\Debug\netcoreapp2.2\DataModel.dll
+C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\DataModel\obj\Debug\netcoreapp2.2\DataModel.pdb
+C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\DataModel\obj\Debug\netcoreapp2.2\DataModel.csprojAssemblyReference.cache

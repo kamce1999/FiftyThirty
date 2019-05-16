@@ -1,0 +1,9 @@
+C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\lavu\bin\Debug\netstandard2.0\Fifty.Lavu.deps.json
+C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\lavu\bin\Debug\netstandard2.0\Fifty.Lavu.dll
+C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\lavu\bin\Debug\netstandard2.0\Fifty.Lavu.pdb
+C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\lavu\obj\Debug\netstandard2.0\Fifty.Lavu.csprojAssemblyReference.cache
+C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\lavu\obj\Debug\netstandard2.0\Fifty.Lavu.csproj.CoreCompileInputs.cache
+C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\lavu\obj\Debug\netstandard2.0\Fifty.Lavu.AssemblyInfoInputs.cache
+C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\lavu\obj\Debug\netstandard2.0\Fifty.Lavu.AssemblyInfo.cs
+C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\lavu\obj\Debug\netstandard2.0\Fifty.Lavu.dll
+C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\lavu\obj\Debug\netstandard2.0\Fifty.Lavu.pdb

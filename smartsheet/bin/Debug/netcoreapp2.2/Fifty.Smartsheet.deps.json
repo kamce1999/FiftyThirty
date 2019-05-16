@@ -1,0 +1,227 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v2.2",
+    "signature": "a5c6706536970f152a681d8d17da3f04044e63fb"
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v2.2": {
+      "Fifty.Smartsheet/1.0.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "12.0.2",
+          "System.Management": "4.5.0",
+          "smartsheet-csharp-sdk": "2.6.0"
+        },
+        "runtime": {
+          "Fifty.Smartsheet.dll": {}
+        }
+      },
+      "Microsoft.Win32.Registry/4.5.0": {
+        "dependencies": {
+          "System.Security.AccessControl": "4.5.0",
+          "System.Security.Principal.Windows": "4.5.0"
+        },
+        "runtimeTargets": {
+          "runtime/unix/lib/_._": {
+            "rid": "unix",
+            "assetType": "runtime"
+          },
+          "runtime/win/lib/_._": {
+            "rid": "win",
+            "assetType": "runtime"
+          }
+        }
+      },
+      "Newtonsoft.Json/12.0.2": {
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {
+            "assemblyVersion": "12.0.0.0",
+            "fileVersion": "12.0.2.23222"
+          }
+        }
+      },
+      "NLog/4.5.3": {
+        "runtime": {
+          "lib/netstandard2.0/NLog.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.5.3.7533"
+          }
+        }
+      },
+      "NLog.Config/4.5.3": {
+        "dependencies": {
+          "NLog": "4.5.3",
+          "NLog.Schema": "4.5.3"
+        }
+      },
+      "NLog.Schema/4.5.3": {},
+      "RestSharp/106.2.1": {
+        "dependencies": {
+          "System.ValueTuple": "4.4.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/RestSharp.dll": {
+            "assemblyVersion": "106.2.1.0",
+            "fileVersion": "106.2.1.1"
+          }
+        }
+      },
+      "smartsheet-csharp-sdk/2.6.0": {
+        "dependencies": {
+          "NLog.Config": "4.5.3",
+          "Newtonsoft.Json": "12.0.2",
+          "RestSharp": "106.2.1"
+        },
+        "runtime": {
+          "lib/net452/smartsheet-csharp-sdk.dll": {
+            "assemblyVersion": "2.6.0.0",
+            "fileVersion": "2.6.0.0"
+          }
+        }
+      },
+      "System.CodeDom/4.5.0": {
+        "runtime": {
+          "lib/netstandard2.0/System.CodeDom.dll": {
+            "assemblyVersion": "4.0.1.0",
+            "fileVersion": "4.6.26515.6"
+          }
+        }
+      },
+      "System.Management/4.5.0": {
+        "dependencies": {
+          "Microsoft.Win32.Registry": "4.5.0",
+          "System.CodeDom": "4.5.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/System.Management.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.6.26515.6"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/netcoreapp2.0/System.Management.dll": {
+            "rid": "win",
+            "assetType": "runtime",
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.6.26515.6"
+          }
+        }
+      },
+      "System.Security.AccessControl/4.5.0": {
+        "dependencies": {
+          "System.Security.Principal.Windows": "4.5.0"
+        },
+        "runtimeTargets": {
+          "runtime/win/lib/_._": {
+            "rid": "win",
+            "assetType": "runtime"
+          }
+        }
+      },
+      "System.Security.Principal.Windows/4.5.0": {
+        "runtimeTargets": {
+          "runtime/unix/lib/_._": {
+            "rid": "unix",
+            "assetType": "runtime"
+          },
+          "runtime/win/lib/_._": {
+            "rid": "win",
+            "assetType": "runtime"
+          }
+        }
+      },
+      "System.ValueTuple/4.4.0": {}
+    }
+  },
+  "libraries": {
+    "Fifty.Smartsheet/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Microsoft.Win32.Registry/4.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-+FWlwd//+Tt56316p00hVePBCouXyEzT86Jb3+AuRotTND0IYn0OO3obs1gnQEs/txEnt+rF2JBGLItTG+Be6A==",
+      "path": "microsoft.win32.registry/4.5.0",
+      "hashPath": "microsoft.win32.registry.4.5.0.nupkg.sha512"
+    },
+    "Newtonsoft.Json/12.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-rTK0s2EKlfHsQsH6Yx2smvcTCeyoDNgCW7FEYyV01drPlh2T243PR2DiDXqtC5N4GDm4Ma/lkxfW5a/4793vbA==",
+      "path": "newtonsoft.json/12.0.2",
+      "hashPath": "newtonsoft.json.12.0.2.nupkg.sha512"
+    },
+    "NLog/4.5.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/JYo07DnD3qLsEn1juvmPTkbd7+FUAYHt+zZgCPZSWwQ8b061vXdgpQSC2KKe2GJTAUs07YbU7tfhiyDBgANlA==",
+      "path": "nlog/4.5.3",
+      "hashPath": "nlog.4.5.3.nupkg.sha512"
+    },
+    "NLog.Config/4.5.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-C3JaHcgVG8AqCKpmYyMxLKDDVeHNf2ttn98+WJlvVSJC5Tv1Q24XGWtuE2Lgf8YPyUQCP3Fxz2Akrswr9PVyGw==",
+      "path": "nlog.config/4.5.3",
+      "hashPath": "nlog.config.4.5.3.nupkg.sha512"
+    },
+    "NLog.Schema/4.5.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-eC0lQlJ9CnUnmBOta5+1EpTQgJyZXMQffhaw4aJBHtUjkMkuMJQETma0WOfhPfdVg4Vzh9JOPKZIdGlX6WMsMw==",
+      "path": "nlog.schema/4.5.3",
+      "hashPath": "nlog.schema.4.5.3.nupkg.sha512"
+    },
+    "RestSharp/106.2.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-YlL7/d6N0loTeI7BatX38snkSI/UhKSMPIWZ+rAxMMFM05QOKPySb43bNm/AUHmVca/FaNceOpgtZzY7Em8vNw==",
+      "path": "restsharp/106.2.1",
+      "hashPath": "restsharp.106.2.1.nupkg.sha512"
+    },
+    "smartsheet-csharp-sdk/2.6.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Y+Q6FdnrmJ03Bb7oRmdBtwbe7uJZoI11E7BcWSX1yuH746omG9IyTawVfPvijg4PRafaXeO1rCv5iTTW+XWavg==",
+      "path": "smartsheet-csharp-sdk/2.6.0",
+      "hashPath": "smartsheet-csharp-sdk.2.6.0.nupkg.sha512"
+    },
+    "System.CodeDom/4.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-gqpR1EeXOuzNQWL7rOzmtdIz3CaXVjSQCiaGOs2ivjPwynKSJYm39X81fdlp7WuojZs/Z5t1k5ni7HtKQurhjw==",
+      "path": "system.codedom/4.5.0",
+      "hashPath": "system.codedom.4.5.0.nupkg.sha512"
+    },
+    "System.Management/4.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Z6ac0qPGr3yJtwZEX1SRkhwWa0Kf5NJxx7smLboYsGrApQFECNFdqhGy252T4lrZ5Nwzhd9VQiaifndR3bfHdg==",
+      "path": "system.management/4.5.0",
+      "hashPath": "system.management.4.5.0.nupkg.sha512"
+    },
+    "System.Security.AccessControl/4.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-vW8Eoq0TMyz5vAG/6ce483x/CP83fgm4SJe5P8Tb1tZaobcvPrbMEL7rhH1DRdrYbbb6F0vq3OlzmK0Pkwks5A==",
+      "path": "system.security.accesscontrol/4.5.0",
+      "hashPath": "system.security.accesscontrol.4.5.0.nupkg.sha512"
+    },
+    "System.Security.Principal.Windows/4.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-U77HfRXlZlOeIXd//Yoj6Jnk8AXlbeisf1oq1os+hxOGVnuG+lGSfGqTwTZBoORFF6j/0q7HXIl8cqwQ9aUGqQ==",
+      "path": "system.security.principal.windows/4.5.0",
+      "hashPath": "system.security.principal.windows.4.5.0.nupkg.sha512"
+    },
+    "System.ValueTuple/4.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-BahUww/+mdP4ARCAh2RQhQTg13wYLVrBb9SYVgW8ZlrwjraGCXHGjo0oIiUfZ34LUZkMMR+RAzR7dEY4S1HeQQ==",
+      "path": "system.valuetuple/4.4.0",
+      "hashPath": "system.valuetuple.4.4.0.nupkg.sha512"
+    }
+  }
+}

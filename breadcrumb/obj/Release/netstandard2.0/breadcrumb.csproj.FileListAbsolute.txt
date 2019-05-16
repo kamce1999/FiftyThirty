@@ -1,0 +1,9 @@
+C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\breadcrumb\bin\Release\netstandard2.0\breadcrumb.deps.json
+C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\breadcrumb\bin\Release\netstandard2.0\breadcrumb.dll
+C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\breadcrumb\bin\Release\netstandard2.0\breadcrumb.pdb
+C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\breadcrumb\obj\Release\netstandard2.0\breadcrumb.csprojAssemblyReference.cache
+C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\breadcrumb\obj\Release\netstandard2.0\breadcrumb.csproj.CoreCompileInputs.cache
+C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\breadcrumb\obj\Release\netstandard2.0\breadcrumb.AssemblyInfoInputs.cache
+C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\breadcrumb\obj\Release\netstandard2.0\breadcrumb.AssemblyInfo.cs
+C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\breadcrumb\obj\Release\netstandard2.0\breadcrumb.dll
+C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\breadcrumb\obj\Release\netstandard2.0\breadcrumb.pdb
