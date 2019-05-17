@@ -36,6 +36,8 @@ namespace Fifty.Lavu
         public int RoleId { get; set; }
 
 	    [Newtonsoft.Json.JsonProperty("payrate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public double Payrate { get; set; }
+        public float Payrate { get; set; }
+
+	    public DayOfWeek DayOfWeek { get; set; }
 	}
 }

@@ -29,13 +29,17 @@ namespace Fifty.Lavu
 					new KeyValuePair<string, string>("key", "h6yIkHNczEpwfNnH2wWL"),
 					new KeyValuePair<string, string>("token", "xQYqce8EImAp2hsxn4TQ"),
 					new KeyValuePair<string, string>("table", table),
-					new KeyValuePair<string, string>("column", filter),
 					new KeyValuePair<string, string>("value_min", start),
 					new KeyValuePair<string, string>("value_max", end),
 					new KeyValuePair<string, string>("valid_xml", "1"),
 				};
 
-                var content = new FormUrlEncodedContent(data);
+			    if (!string.IsNullOrEmpty(filter))
+			    {
+			        data.Add(new KeyValuePair<string, string>("column", filter));
+			    }
+
+			    var content = new FormUrlEncodedContent(data);
 
 				var response = client.PostAsync(uri, content).Result;
 
