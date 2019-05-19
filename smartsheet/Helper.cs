@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-
-using Fifty.Lavu;
-
 using Smartsheet.Api;
 using Smartsheet.Api.Models;
 
@@ -13,40 +9,84 @@ namespace Fifty.Smartsheet
     public static class Helper
     {
         private const long SheetId = 1854968576665476;
-        private static List<Column> columnList = new List<Column>();
+		private const string AccessToken = "lsazvdkpo5338ett4b2rpdrvm2";
+		private static Dictionary<string, long> columnMap = new Dictionary<string, long>();
+        private static Sheet sheet;
+        private static SmartsheetClient smartsheet;
 
-        public static void GetData(List<ServerHours> serverHours)
+        public static void GetData(List<ServerHours> serverHours, List<SalesSummary> salesSummary)
         {
-            var smartsheet = new SmartsheetBuilder().SetAccessToken("lsazvdkpo5338ett4b2rpdrvm2").Build();
+            smartsheet = new SmartsheetBuilder().SetAccessToken(AccessToken).Build();
 
-            var sheet = smartsheet.SheetResources.GetSheet(SheetId, null, null, null, null, null, null, null);
+            sheet = smartsheet.SheetResources.GetSheet(SheetId, null, null, null, null, null, null, null);
 
-            columnList = GetColumns(sheet);
+            InitializeColumnMap();
 
-            GetEmployeeRange(sheet, columnList, out var beginRow, out var endRow);
-            if (beginRow == null || endRow == null)
+            UpdateServerHours(serverHours);
+
+            UpdateDailySales(salesSummary);
+
+            Console.WriteLine("Loaded " + sheet.Rows.Count + " rows from sheet: " + sheet.Name);
+        }
+
+        private static void UpdateDailySales(List<SalesSummary> salesSummary)
+        {
+            var salesRow = GetRow(columnMap[ColumnNames.EmployeeName], "Daily Sales");
+            var serviceFeeRow = GetRow(columnMap[ColumnNames.EmployeeName], "Service Fee");
+            var sales = new List<Cell>();
+            var serviceFee = new List<Cell>();
+
+            foreach (var daySummary in salesSummary)
             {
-                throw new Exception("Could not find Employee Rows");
+                switch (daySummary.DayOfWeek)
+                {
+                    case DayOfWeek.Monday:
+                        sales.Add(new Cell { Value = daySummary.NetSales, ColumnId = columnMap[ColumnNames.Monday] });
+                        serviceFee.Add(new Cell { Value = daySummary.ServiceFee, ColumnId = columnMap[ColumnNames.Monday] });
+                        break;
+                    case DayOfWeek.Tuesday:
+                        sales.Add(new Cell { Value = daySummary.NetSales, ColumnId = columnMap[ColumnNames.Tuesday] });
+                        serviceFee.Add(new Cell { Value = daySummary.ServiceFee, ColumnId = columnMap[ColumnNames.Tuesday] });
+                        break;
+                    case DayOfWeek.Wednesday:
+                        sales.Add(new Cell { Value = daySummary.NetSales, ColumnId = columnMap[ColumnNames.Wednesday] });
+                        serviceFee.Add(new Cell { Value = daySummary.ServiceFee, ColumnId = columnMap[ColumnNames.Wednesday] });
+                        break;
+                    case DayOfWeek.Thursday:
+                        sales.Add(new Cell { Value = daySummary.NetSales, ColumnId = columnMap[ColumnNames.Thursday] });
+                        serviceFee.Add(new Cell { Value = daySummary.ServiceFee, ColumnId = columnMap[ColumnNames.Thursday] });
+                        break;
+                    case DayOfWeek.Friday:
+                        sales.Add(new Cell { Value = daySummary.NetSales, ColumnId = columnMap[ColumnNames.Friday] });
+                        serviceFee.Add(new Cell { Value = daySummary.ServiceFee, ColumnId = columnMap[ColumnNames.Friday] });
+                        break;
+                    case DayOfWeek.Saturday:
+                        sales.Add(new Cell { Value = daySummary.NetSales, ColumnId = columnMap[ColumnNames.Saturday] });
+                        serviceFee.Add(new Cell { Value = daySummary.ServiceFee, ColumnId = columnMap[ColumnNames.Saturday] });
+                        break;
+                    case DayOfWeek.Sunday:
+                        sales.Add(new Cell { Value = daySummary.NetSales, ColumnId = columnMap[ColumnNames.Sunday] });
+                        serviceFee.Add(new Cell { Value = daySummary.ServiceFee, ColumnId = columnMap[ColumnNames.Sunday] });
+                        break;
+                }
             }
 
-            var employeeRows = sheet.Rows.Where(r => r.RowNumber > beginRow.RowNumber && r.RowNumber < endRow.RowNumber).Select(r => r).ToList();
-            
+            var rowsToUpdate = new[]
+            {
+                new Row { Id = salesRow.Id, Cells = sales },
+                new Row { Id = serviceFeeRow.Id, Cells = serviceFee }
+            };
+
+            smartsheet.SheetResources.RowResources.UpdateRows(SheetId, rowsToUpdate);
+        }
+
+        private static void UpdateServerHours(List<ServerHours> serverHours)
+        {
+            var employeeRows = GetEmployeeRows(out var parentRowId);
+
             foreach (var server in serverHours)
             {
-                var cells = new List<Cell>
-                {
-                    new Cell { Value = server.ServerId, ColumnId = GetColumnId(ColumnType.ServerId) },
-                    new Cell { Value = server.EmployeeName, ColumnId = GetColumnId(ColumnType.EmployeeName) },
-                    new Cell { Value = server.Position, ColumnId = GetColumnId(ColumnType.Position) },
-                    new Cell { Value = server.PayRate, ColumnId = GetColumnId(ColumnType.PayRate) },
-                    new Cell { Value = server.Monday, ColumnId = GetColumnId(ColumnType.Monday) },
-                    new Cell { Value = server.Tuesday, ColumnId = GetColumnId(ColumnType.Tuesday) },
-                    new Cell { Value = server.Wednesday, ColumnId = GetColumnId(ColumnType.Wednesday) },
-                    new Cell { Value = server.Thursday, ColumnId = GetColumnId(ColumnType.Thursday) },
-                    new Cell { Value = server.Friday, ColumnId = GetColumnId(ColumnType.Friday) },
-                    new Cell { Value = server.Saturday, ColumnId = GetColumnId(ColumnType.Saturday) },
-                    new Cell { Value = server.Sunday, ColumnId = GetColumnId(ColumnType.Sunday) }
-                };
+                var cells = GetCellValues(server);
 
                 var row = employeeRows.FirstOrDefault(r => Convert.ToInt32(r.Cells[0].Value) == server.ServerId);
 
@@ -58,83 +98,103 @@ namespace Fifty.Smartsheet
                 }
                 else
                 {
-                    var newRow = new Row { ParentId = beginRow.Id, Cells = cells };
+                    var newRow = new Row { ParentId = parentRowId, Cells = cells };
                     smartsheet.SheetResources.RowResources.AddRows(SheetId, new[] { newRow });
                 }
             }
-
-
-            Console.WriteLine("Loaded " + sheet.Rows.Count + " rows from sheet: " + sheet.Name);
         }
 
-        private static string GetStringValue(float value) => value > 0 ? value.ToString(CultureInfo.CurrentCulture) : string.Empty;
+        private static void InitializeColumnMap()
+		{
+			foreach (var column in sheet.Columns)
+			{
+				if (column.Id.HasValue)
+				{
+					columnMap.Add(column.Title, column.Id.Value);
+				}
+			}
+		}
 
-        public static List<Column> GetColumns(Sheet sheet)
+		private static List<Cell> GetCellValues(ServerHours server)
+		{
+			var cells = new List<Cell>
+				{
+					new Cell { Value = server.ServerId, ColumnId = columnMap[ColumnNames.ServerId] },
+					new Cell { Value = server.EmployeeName, ColumnId = columnMap[ColumnNames.EmployeeName] },
+					new Cell { Value = server.Position, ColumnId = columnMap[ColumnNames.Position] },
+					new Cell { Value = server.PayRate, ColumnId = columnMap[ColumnNames.PayRate] }
+				};
+            
+			if (server.Monday > 0)
+			{
+				cells.Add(new Cell { Value = server.Monday, ColumnId = columnMap[ColumnNames.Monday] });
+			}
+
+			if (server.Tuesday > 0)
+			{
+				cells.Add(new Cell { Value = server.Tuesday, ColumnId = columnMap[ColumnNames.Tuesday] });
+			}
+
+			if (server.Wednesday > 0)
+			{
+				cells.Add(new Cell { Value = server.Wednesday, ColumnId = columnMap[ColumnNames.Wednesday] });
+			}
+
+			if (server.Thursday > 0)
+			{
+				cells.Add(new Cell { Value = server.Thursday, ColumnId = columnMap[ColumnNames.Thursday] });
+			}
+
+			if (server.Friday > 0)
+			{
+				cells.Add(new Cell { Value = server.Friday, ColumnId = columnMap[ColumnNames.Friday] });
+			}
+
+			if (server.Saturday > 0)
+			{
+				cells.Add(new Cell { Value = server.Saturday, ColumnId = columnMap[ColumnNames.Saturday] });
+			}
+
+			if (server.Sunday > 0)
+			{
+				cells.Add(new Cell { Value = server.Sunday, ColumnId = columnMap[ColumnNames.Sunday] });
+			}
+
+			return cells;
+		}
+
+        private static float AdjustSalriedHours(bool salaried, float hours)
         {
-            var cols = new List<Column>
-            {
-                GetColumn(sheet, "ServerId", ColumnType.ServerId),
-                GetColumn(sheet, "primary", ColumnType.EmployeeName),
-                GetColumn(sheet, "Position", ColumnType.Position),
-                GetColumn(sheet, "Pay Rate", ColumnType.PayRate),
-                GetColumn(sheet, "Monday", ColumnType.Monday),
-                GetColumn(sheet, "Tuesday", ColumnType.Tuesday),
-                GetColumn(sheet, "Wednesday", ColumnType.Wednesday),
-                GetColumn(sheet, "Thursday", ColumnType.Thursday),
-                GetColumn(sheet, "Friday", ColumnType.Friday),
-                GetColumn(sheet, "Saturday", ColumnType.Saturday),
-                GetColumn(sheet, "Sunday", ColumnType.Sunday),
-            };
-
-            var errors = cols.Where(c => c.Index < 0 || c.Id < 1).Select(c => c.ColumnType.ToString()).ToArray();
-            if (errors.Length > 0)
-            {
-                throw new Exception($"Could not find column headers for: {string.Join(',', errors)}");
-            }
-
-            return cols;
+            return (salaried && hours > 8) ? 8.0f : hours;
         }
 
-        private static Column GetColumn(Sheet sheet, string name, ColumnType type)
+        private static List<Row> GetEmployeeRows(out long parentRowId)
         {
-            var column = new Column { ColumnType = type };
+            var beginRow = GetRow(columnMap[ColumnNames.EmployeeName], "Employee Name");
+            var endRow = GetRow(columnMap[ColumnNames.EmployeeName], "Salary Employees");
+            
+	        if (beginRow == null || endRow == null)
+	        {
+		        throw new Exception("Could not find Employee Rows");
+	        }
 
-            var result = sheet.Columns.FirstOrDefault(c => string.Compare(c.Title, name, StringComparison.OrdinalIgnoreCase) == 0);
-            if (result != null)
-            {
-                column.Id = result.Id ?? -1;
-            }
+	        parentRowId = beginRow.Id ?? -1;
 
-            return column;
-        }
+			return sheet.Rows.Where(r => r.RowNumber > beginRow.RowNumber && r.RowNumber < endRow.RowNumber).Select(r => r).ToList();
+		}
 
-        private static long GetColumnId(ColumnType type)
+        private static Row GetRow(long columnId, string filter)
         {
-            var id = columnList.First(c => c.ColumnType == type).Id;
-
-            return id;
-        }
-
-        private static void GetEmployeeRange(Sheet sheet, List<Column> columns, out Row beginEmployeeRow, out Row endEmployeeRow)
-        {
-            beginEmployeeRow = null;
-            endEmployeeRow = null;
-
-            var employeeNameCol = columns.First(c => c.ColumnType == ColumnType.EmployeeName);
-
             foreach (var row in sheet.Rows)
             {
-                var cellValue = row.Cells.FirstOrDefault(c => c.ColumnId == employeeNameCol.Id)?.Value;
-                if ((cellValue ?? string.Empty).ToString() == "Employee Name")
+                var cellValue = row.Cells.FirstOrDefault(c => c.ColumnId == columnId)?.Value;
+                if ((cellValue ?? string.Empty).ToString() == filter)
                 {
-                    beginEmployeeRow = row;
-                }
-
-                if ((cellValue ?? string.Empty).ToString() == "Salary Employees")
-                {
-                    endEmployeeRow = row;
+                    return row;
                 }
             }
+
+            return null;
         }
     }
 }

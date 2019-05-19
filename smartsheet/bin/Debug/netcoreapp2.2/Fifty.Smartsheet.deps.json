@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v2.2": {
       "Fifty.Smartsheet/1.0.0": {
         "dependencies": {
+          "Fifty.Lavu": "1.0.0",
           "Newtonsoft.Json": "12.0.2",
           "System.Management": "4.5.0",
           "smartsheet-csharp-sdk": "2.6.0"
@@ -130,7 +131,15 @@
           }
         }
       },
-      "System.ValueTuple/4.4.0": {}
+      "System.ValueTuple/4.4.0": {},
+      "Fifty.Lavu/1.0.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "12.0.2"
+        },
+        "runtime": {
+          "fifty.lavu.dll": {}
+        }
+      }
     }
   },
   "libraries": {
@@ -222,6 +231,11 @@
       "sha512": "sha512-BahUww/+mdP4ARCAh2RQhQTg13wYLVrBb9SYVgW8ZlrwjraGCXHGjo0oIiUfZ34LUZkMMR+RAzR7dEY4S1HeQQ==",
       "path": "system.valuetuple/4.4.0",
       "hashPath": "system.valuetuple.4.4.0.nupkg.sha512"
+    },
+    "Fifty.Lavu/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }

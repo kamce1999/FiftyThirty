@@ -525,11 +525,12 @@
           "Newtonsoft.Json": "12.0.2"
         },
         "runtime": {
-          "Fifty.Lavu.dll": {}
+          "fifty.lavu.dll": {}
         }
       },
       "Fifty.Smartsheet/1.0.0": {
         "dependencies": {
+          "Fifty.Lavu": "1.0.0",
           "Newtonsoft.Json": "12.0.2",
           "System.Management": "4.5.0",
           "smartsheet-csharp-sdk": "2.6.0"

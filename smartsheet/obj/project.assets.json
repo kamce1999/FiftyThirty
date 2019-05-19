@@ -377,6 +377,19 @@
         "runtime": {
           "lib/netcoreapp2.0/_._": {}
         }
+      },
+      "Fifty.Lavu/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "Newtonsoft.Json": "12.0.2"
+        },
+        "compile": {
+          "bin/placeholder/Fifty.Lavu.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Fifty.Lavu.dll": {}
+        }
       }
     }
   },
@@ -1177,10 +1190,16 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
+    },
+    "Fifty.Lavu/1.0.0": {
+      "type": "project",
+      "path": "../lavu/Fifty.Lavu.csproj",
+      "msbuildProject": "../lavu/Fifty.Lavu.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.2": [
+      "Fifty.Lavu >= 1.0.0",
       "Microsoft.NETCore.App >= 2.2.0",
       "Newtonsoft.Json >= 12.0.2",
       "System.Management >= 4.5.0",
@@ -1194,11 +1213,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\khepp\\Documents\\Visual Studio 2017\\Projects\\fifty\\smartsheet\\Fifty.Smartsheet.csproj",
+      "projectUniqueName": "C:\\code\\FiftyThirty\\smartsheet\\Fifty.Smartsheet.csproj",
       "projectName": "Fifty.Smartsheet",
-      "projectPath": "C:\\Users\\khepp\\Documents\\Visual Studio 2017\\Projects\\fifty\\smartsheet\\Fifty.Smartsheet.csproj",
+      "projectPath": "C:\\code\\FiftyThirty\\smartsheet\\Fifty.Smartsheet.csproj",
       "packagesPath": "C:\\Users\\khepp\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\khepp\\Documents\\Visual Studio 2017\\Projects\\fifty\\smartsheet\\obj\\",
+      "outputPath": "C:\\code\\FiftyThirty\\smartsheet\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -1216,7 +1235,11 @@
       },
       "frameworks": {
         "netcoreapp2.2": {
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\code\\FiftyThirty\\lavu\\fifty.lavu.csproj": {
+              "projectPath": "C:\\code\\FiftyThirty\\lavu\\fifty.lavu.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

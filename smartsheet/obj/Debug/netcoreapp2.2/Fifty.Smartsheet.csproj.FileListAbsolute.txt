@@ -7,3 +7,15 @@ C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\smartsheet\obj\Debug\
 C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\smartsheet\obj\Debug\netcoreapp2.2\Fifty.Smartsheet.AssemblyInfo.cs
 C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\smartsheet\obj\Debug\netcoreapp2.2\Fifty.Smartsheet.dll
 C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\smartsheet\obj\Debug\netcoreapp2.2\Fifty.Smartsheet.pdb
+C:\code\FiftyThirty\smartsheet\bin\Debug\netcoreapp2.2\Fifty.Smartsheet.deps.json
+C:\code\FiftyThirty\smartsheet\bin\Debug\netcoreapp2.2\Fifty.Smartsheet.dll
+C:\code\FiftyThirty\smartsheet\bin\Debug\netcoreapp2.2\Fifty.Smartsheet.pdb
+C:\code\FiftyThirty\smartsheet\obj\Debug\netcoreapp2.2\Fifty.Smartsheet.csprojAssemblyReference.cache
+C:\code\FiftyThirty\smartsheet\obj\Debug\netcoreapp2.2\Fifty.Smartsheet.csproj.CoreCompileInputs.cache
+C:\code\FiftyThirty\smartsheet\obj\Debug\netcoreapp2.2\Fifty.Smartsheet.AssemblyInfoInputs.cache
+C:\code\FiftyThirty\smartsheet\obj\Debug\netcoreapp2.2\Fifty.Smartsheet.AssemblyInfo.cs
+C:\code\FiftyThirty\smartsheet\obj\Debug\netcoreapp2.2\Fifty.Smartsheet.dll
+C:\code\FiftyThirty\smartsheet\obj\Debug\netcoreapp2.2\Fifty.Smartsheet.pdb
+C:\code\FiftyThirty\smartsheet\bin\Debug\netcoreapp2.2\fifty.lavu.dll
+C:\code\FiftyThirty\smartsheet\bin\Debug\netcoreapp2.2\fifty.lavu.pdb
+C:\code\FiftyThirty\smartsheet\obj\Debug\netcoreapp2.2\Fifty.Smartsheet.csproj.CopyComplete

@@ -224,11 +224,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\khepp\\Documents\\Visual Studio 2017\\Projects\\fifty\\lavu\\Fifty.Lavu.csproj",
+      "projectUniqueName": "C:\\code\\FiftyThirty\\lavu\\Fifty.Lavu.csproj",
       "projectName": "Fifty.Lavu",
-      "projectPath": "C:\\Users\\khepp\\Documents\\Visual Studio 2017\\Projects\\fifty\\lavu\\Fifty.Lavu.csproj",
+      "projectPath": "C:\\code\\FiftyThirty\\lavu\\Fifty.Lavu.csproj",
       "packagesPath": "C:\\Users\\khepp\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\khepp\\Documents\\Visual Studio 2017\\Projects\\fifty\\lavu\\obj\\",
+      "outputPath": "C:\\code\\FiftyThirty\\lavu\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

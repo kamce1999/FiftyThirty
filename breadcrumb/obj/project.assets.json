@@ -224,11 +224,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\khepp\\Documents\\Visual Studio 2017\\Projects\\fifty\\breadcrumb\\breadcrumb.csproj",
+      "projectUniqueName": "C:\\code\\FiftyThirty\\breadcrumb\\breadcrumb.csproj",
       "projectName": "breadcrumb",
-      "projectPath": "C:\\Users\\khepp\\Documents\\Visual Studio 2017\\Projects\\fifty\\breadcrumb\\breadcrumb.csproj",
+      "projectPath": "C:\\code\\FiftyThirty\\breadcrumb\\breadcrumb.csproj",
       "packagesPath": "C:\\Users\\khepp\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\khepp\\Documents\\Visual Studio 2017\\Projects\\fifty\\breadcrumb\\obj\\",
+      "outputPath": "C:\\code\\FiftyThirty\\breadcrumb\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

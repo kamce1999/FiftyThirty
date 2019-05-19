@@ -7,3 +7,12 @@ C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\lavu\obj\Debug\netsta
 C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\lavu\obj\Debug\netstandard2.0\Fifty.Lavu.AssemblyInfo.cs
 C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\lavu\obj\Debug\netstandard2.0\Fifty.Lavu.dll
 C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\lavu\obj\Debug\netstandard2.0\Fifty.Lavu.pdb
+C:\code\FiftyThirty\lavu\bin\Debug\netstandard2.0\Fifty.Lavu.deps.json
+C:\code\FiftyThirty\lavu\bin\Debug\netstandard2.0\Fifty.Lavu.dll
+C:\code\FiftyThirty\lavu\bin\Debug\netstandard2.0\Fifty.Lavu.pdb
+C:\code\FiftyThirty\lavu\obj\Debug\netstandard2.0\Fifty.Lavu.csprojAssemblyReference.cache
+C:\code\FiftyThirty\lavu\obj\Debug\netstandard2.0\Fifty.Lavu.csproj.CoreCompileInputs.cache
+C:\code\FiftyThirty\lavu\obj\Debug\netstandard2.0\Fifty.Lavu.AssemblyInfoInputs.cache
+C:\code\FiftyThirty\lavu\obj\Debug\netstandard2.0\Fifty.Lavu.AssemblyInfo.cs
+C:\code\FiftyThirty\lavu\obj\Debug\netstandard2.0\Fifty.Lavu.dll
+C:\code\FiftyThirty\lavu\obj\Debug\netstandard2.0\Fifty.Lavu.pdb

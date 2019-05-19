@@ -3010,11 +3010,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\khepp\\Documents\\Visual Studio 2017\\Projects\\fifty\\DataModel\\DataModel.csproj",
+      "projectUniqueName": "C:\\code\\FiftyThirty\\DataModel\\DataModel.csproj",
       "projectName": "DataModel",
-      "projectPath": "C:\\Users\\khepp\\Documents\\Visual Studio 2017\\Projects\\fifty\\DataModel\\DataModel.csproj",
+      "projectPath": "C:\\code\\FiftyThirty\\DataModel\\DataModel.csproj",
       "packagesPath": "C:\\Users\\khepp\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\khepp\\Documents\\Visual Studio 2017\\Projects\\fifty\\DataModel\\obj\\",
+      "outputPath": "C:\\code\\FiftyThirty\\DataModel\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

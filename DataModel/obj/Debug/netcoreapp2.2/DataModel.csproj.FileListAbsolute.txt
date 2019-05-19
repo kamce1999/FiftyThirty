@@ -7,3 +7,12 @@ C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\DataModel\obj\Debug\n
 C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\DataModel\obj\Debug\netcoreapp2.2\DataModel.dll
 C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\DataModel\obj\Debug\netcoreapp2.2\DataModel.pdb
 C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\DataModel\obj\Debug\netcoreapp2.2\DataModel.csprojAssemblyReference.cache
+C:\code\FiftyThirty\DataModel\bin\Debug\netcoreapp2.2\DataModel.deps.json
+C:\code\FiftyThirty\DataModel\bin\Debug\netcoreapp2.2\DataModel.dll
+C:\code\FiftyThirty\DataModel\bin\Debug\netcoreapp2.2\DataModel.pdb
+C:\code\FiftyThirty\DataModel\obj\Debug\netcoreapp2.2\DataModel.csprojAssemblyReference.cache
+C:\code\FiftyThirty\DataModel\obj\Debug\netcoreapp2.2\DataModel.csproj.CoreCompileInputs.cache
+C:\code\FiftyThirty\DataModel\obj\Debug\netcoreapp2.2\DataModel.AssemblyInfoInputs.cache
+C:\code\FiftyThirty\DataModel\obj\Debug\netcoreapp2.2\DataModel.AssemblyInfo.cs
+C:\code\FiftyThirty\DataModel\obj\Debug\netcoreapp2.2\DataModel.dll
+C:\code\FiftyThirty\DataModel\obj\Debug\netcoreapp2.2\DataModel.pdb

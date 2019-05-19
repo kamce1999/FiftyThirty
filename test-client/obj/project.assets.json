@@ -990,6 +990,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.2",
         "dependencies": {
+          "Fifty.Lavu": "1.0.0",
           "Newtonsoft.Json": "12.0.2",
           "System.Management": "4.5.0",
           "smartsheet-csharp-sdk": "2.6.0"
@@ -3686,11 +3687,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\khepp\\Documents\\Visual Studio 2017\\Projects\\fifty\\test-client\\test-client.csproj",
+      "projectUniqueName": "C:\\code\\FiftyThirty\\test-client\\test-client.csproj",
       "projectName": "test-client",
-      "projectPath": "C:\\Users\\khepp\\Documents\\Visual Studio 2017\\Projects\\fifty\\test-client\\test-client.csproj",
+      "projectPath": "C:\\code\\FiftyThirty\\test-client\\test-client.csproj",
       "packagesPath": "C:\\Users\\khepp\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\khepp\\Documents\\Visual Studio 2017\\Projects\\fifty\\test-client\\obj\\",
+      "outputPath": "C:\\code\\FiftyThirty\\test-client\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -3709,17 +3710,17 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
-            "C:\\Users\\khepp\\Documents\\Visual Studio 2017\\Projects\\fifty\\breadcrumb\\breadcrumb.csproj": {
-              "projectPath": "C:\\Users\\khepp\\Documents\\Visual Studio 2017\\Projects\\fifty\\breadcrumb\\breadcrumb.csproj"
+            "C:\\code\\FiftyThirty\\breadcrumb\\breadcrumb.csproj": {
+              "projectPath": "C:\\code\\FiftyThirty\\breadcrumb\\breadcrumb.csproj"
             },
-            "C:\\Users\\khepp\\Documents\\Visual Studio 2017\\Projects\\fifty\\DataModel\\DataModel.csproj": {
-              "projectPath": "C:\\Users\\khepp\\Documents\\Visual Studio 2017\\Projects\\fifty\\DataModel\\DataModel.csproj"
+            "C:\\code\\FiftyThirty\\DataModel\\DataModel.csproj": {
+              "projectPath": "C:\\code\\FiftyThirty\\DataModel\\DataModel.csproj"
             },
-            "C:\\Users\\khepp\\Documents\\Visual Studio 2017\\Projects\\fifty\\lavu\\fifty.lavu.csproj": {
-              "projectPath": "C:\\Users\\khepp\\Documents\\Visual Studio 2017\\Projects\\fifty\\lavu\\fifty.lavu.csproj"
+            "C:\\code\\FiftyThirty\\lavu\\fifty.lavu.csproj": {
+              "projectPath": "C:\\code\\FiftyThirty\\lavu\\fifty.lavu.csproj"
             },
-            "C:\\Users\\khepp\\Documents\\Visual Studio 2017\\Projects\\fifty\\smartsheet\\Fifty.Smartsheet.csproj": {
-              "projectPath": "C:\\Users\\khepp\\Documents\\Visual Studio 2017\\Projects\\fifty\\smartsheet\\Fifty.Smartsheet.csproj"
+            "C:\\code\\FiftyThirty\\smartsheet\\Fifty.Smartsheet.csproj": {
+              "projectPath": "C:\\code\\FiftyThirty\\smartsheet\\Fifty.Smartsheet.csproj"
             }
           }
         }
