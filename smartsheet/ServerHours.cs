@@ -16,5 +16,6 @@ namespace Fifty.Smartsheet
         public float Friday { get; set; }
         public float Saturday { get; set; }
         public float Sunday { get; set; }
+		public int RoleId { get; set; }
     }
 }

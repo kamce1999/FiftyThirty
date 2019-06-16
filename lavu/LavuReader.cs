@@ -8,96 +8,97 @@ using Newtonsoft.Json;
 
 namespace Fifty.Lavu
 {
-    [SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1101:PrefixLocalCallsWithThis", Justification = "Reviewed. Suppression is OK here.")]
-    [SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1101:PrefixLocalCallsWithThis", Justification = "Reviewed. Suppression is OK here.")]
-    public class LavuReader
+	[SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1101:PrefixLocalCallsWithThis", Justification = "Reviewed. Suppression is OK here.")]
+	[SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1101:PrefixLocalCallsWithThis", Justification = "Reviewed. Suppression is OK here.")]
+	public class LavuReader
 	{
 		private const string ApiUrl = "https://api.poslavu.com/cp/reqserv/";
 
-	    private string Start { get; set; }
+		private string Start { get; set; }
 
-	    private string End { get; set; }
-        
-	    public async Task<IList<T>> GetTable<T>(string table, string filter)
+		private string End { get; set; }
+
+		public async Task<IList<T>> GetTable<T>(string table, string filter)
 		{
 			var results = new List<T>();
-		    var skip = 0;
-		    var take = 40;
+			var skip = 0;
+			var take = 40;
 
-		    SetupDateRange();
+			SetupDateRange();
 
-            using (var client = new HttpClient())
+			using (var client = new HttpClient())
 			{
-			    var hasMoreData = false;
+				var hasMoreData = false;
 
-			    do
-			    {
-			        var doc = await GetResponse(client, table, filter, skip, take);
+				do
+				{
+					var doc = await GetResponse(client, table, filter, skip, take);
 
-			        var rows = doc.SelectSingleNode("results")?.SelectNodes("row");
-			        if (rows == null)
-			        {
-			            return results;
-			        }
+					var rows = doc.SelectSingleNode("results")?.SelectNodes("row");
+					if (rows == null)
+					{
+						return results;
+					}
 
-			        foreach (XmlNode node in rows)
-			        {
-			            var json = JsonConvert.SerializeXmlNode(node);
-			            results.Add(JsonConvert.DeserializeObject<T>(json));
-			        }
+					foreach (XmlNode node in rows)
+					{
+						var json = JsonConvert.SerializeXmlNode(node);
+						results.Add(JsonConvert.DeserializeObject<T>(json));
+					}
 
-			        hasMoreData = rows.Count == take;
-			        skip = skip + take;
-			    }
-			    while (hasMoreData);
+					hasMoreData = rows.Count == take;
+					skip = skip + take;
+				}
+				while (hasMoreData);
 
-			    return results; 
+				return results;
 			}
 		}
-        
-        private void SetupDateRange()
+
+		private void SetupDateRange()
 		{
 			var date = DateTime.Now.Date;
-			var diff = -(int)date.DayOfWeek + (int)DayOfWeek.Monday;
+			var dayOfWeek = date.DayOfWeek == DayOfWeek.Sunday ? 7 : (int)date.DayOfWeek;
+			var diff = -dayOfWeek + (int)DayOfWeek.Monday;
 			var monday = date.AddDays(diff);
 
 			End = monday.AddDays(7).ToString("yyyy-MM-dd HH:mm:ss");
 			Start = monday.ToString("yyyy-MM-dd HH:mm:ss");
 		}
 
-	    private async Task<XmlDocument> GetResponse(HttpClient client, string table, string filter, int skip, int take)
-	    {
-	        var uri = new Uri(ApiUrl);
+		private async Task<XmlDocument> GetResponse(HttpClient client, string table, string filter, int skip, int take)
+		{
+			var uri = new Uri(ApiUrl);
 
-	        var data = new List<KeyValuePair<string, string>>
-	        {
-	            new KeyValuePair<string, string>("dataname", "peel"),
-	            new KeyValuePair<string, string>("key", "h6yIkHNczEpwfNnH2wWL"),
-	            new KeyValuePair<string, string>("token", "xQYqce8EImAp2hsxn4TQ"),
-	            new KeyValuePair<string, string>("table", table),
-	            new KeyValuePair<string, string>("value_min", Start),
-	            new KeyValuePair<string, string>("value_max", End),
-	            new KeyValuePair<string, string>("limit", $"{skip},{take}"),
-	            new KeyValuePair<string, string>("valid_xml", "1"),
-	        };
+			var data = new List<KeyValuePair<string, string>>
+			{
+				new KeyValuePair<string, string>("dataname", "peel"),
+				new KeyValuePair<string, string>("key", "h6yIkHNczEpwfNnH2wWL"),
+				new KeyValuePair<string, string>("token", "xQYqce8EImAp2hsxn4TQ"),
+				new KeyValuePair<string, string>("table", table),
+				new KeyValuePair<string, string>("value_min", Start),
+				new KeyValuePair<string, string>("value_max", End),
+				new KeyValuePair<string, string>("limit", $"{skip},{take}"),
+				new KeyValuePair<string, string>("valid_xml", "1"),
+			};
 
-	        if (!string.IsNullOrEmpty(filter))
-	        {
-	            data.Add(new KeyValuePair<string, string>("column", filter));
-	        }
+			if (!string.IsNullOrEmpty(filter))
+			{
+				data.Add(new KeyValuePair<string, string>("column", filter));
+			}
 
-	        var content = new FormUrlEncodedContent(data);
+			var content = new FormUrlEncodedContent(data);
 
-	        var response = client.PostAsync(uri, content).Result;
+			var response = client.PostAsync(uri, content).Result;
 
-	        response.EnsureSuccessStatusCode();
+			response.EnsureSuccessStatusCode();
 
-	        var xml = await response.Content.ReadAsStringAsync();
+			var xml = await response.Content.ReadAsStringAsync();
 
-	        var doc = new XmlDocument();
-	        doc.LoadXml(xml);
+			var doc = new XmlDocument();
+			doc.LoadXml(xml);
 
-	        return doc;
-	    }
+			return doc;
+		}
 	}
 }

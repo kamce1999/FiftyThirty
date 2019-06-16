@@ -39,8 +39,8 @@ namespace test_client
                 WriteData(punches);
 
                 var serverHours = GetServerSummary(punches, classes);
-
-                WriteData(serverHours);
+				
+				WriteData(serverHours);
 
                 Helper.GetData(serverHours, orderSummary);
             }
@@ -59,7 +59,7 @@ namespace test_client
             var serverHours = new List<ServerHours>();
             foreach (var item in punches)
             {
-                var server = serverHours.FirstOrDefault(s => s.ServerId == item.ServerId);
+	            var server = serverHours.FirstOrDefault(s => s.ServerId == item.ServerId && s.RoleId == item.RoleId);
                 if (server == null)
                 {
                     server = new ServerHours
@@ -67,6 +67,7 @@ namespace test_client
                         ServerId = item.ServerId,
                         EmployeeName = item.Server,
                         Position = classes.FirstOrDefault(c => c.Id == item.RoleId)?.Title ?? item.RoleId.ToString(),
+						RoleId = item.RoleId,
                         PayRate = item.Payrate
                     };
 
