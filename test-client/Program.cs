@@ -7,139 +7,143 @@ using Fifty.Smartsheet;
 
 namespace test_client
 {
-    public class Program
-    {
-        private static string dataPath = "C:\\code\\breadcrumb";
+	public class Program
+	{
+		private static string dataPath = "C:\\code\\breadcrumb";
 
-        public static void Main(string[] args)
-        {
-            try
-            {
-                var reader = new LavuReader();
+		private const long SheetId5030 = 8475254654822276;
+		private const long SheetIdPeel = 1854968576665476;
 
-                var classes = reader.GetTable<EmployeeClasses>("emp_classes", null).Result.Select(s => s.row).ToList();
+		private static ApiHeaderValues peelHeaderValues = new ApiHeaderValues
+		{
+			DataName = "peel",
+			Key = "h6yIkHNczEpwfNnH2wWL",
+			Token = "xQYqce8EImAp2hsxn4TQ"
+		};
 
-                var orders = reader.GetTable<Orders>("orders", "closed").Result.Select(s => s.row).ToList();
-                WriteData(orders);
+		private static ApiHeaderValues fiftyHeaderValues = new ApiHeaderValues
+		{
+			DataName = "50_30_",
+			Key = "XEiEDX2Ub2w6MmFafDkV",
+			Token = "UJp8Dsx9par3RIatMbYA"
+		};
+		
+		public static void Main(string[] args)
+		{
+			try
+			{
+				DoWork(peelHeaderValues, SheetIdPeel);
+				DoWork(fiftyHeaderValues, SheetId5030);
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.ToString());
+				Console.Read();
+			}
+		}
 
-                var orderSummary =
-                    (from order in orders
-                     group order by order.ClosedDate.DayOfWeek into orderGroup
-                     select new SalesSummary
-                     {
-                         DayOfWeek = orderGroup.Key,
-                         ServiceFee = orderGroup.Sum(x => x.AutoGratuityCard + x.AutoGratuityCash + x.AutoGratuityOther),
-                         NetSales = orderGroup.Sum(x => x.Subtotal - x.Discount),
-                     }).ToList();
+		public static void DoWork(ApiHeaderValues headerValues, long sheetId)
+		{
+			var reader = new LavuReader(DateTime.Now.AddDays(-1));
 
-                WriteData(orderSummary);
+			var classes = reader.GetTable<EmployeeClasses>(headerValues, "emp_classes", null).Result.Select(s => s.row).ToList();
+			var orders = reader.GetTable<Orders>(headerValues, "orders", "closed").Result.Select(s => s.row).ToList();
+			var punches = reader.GetTable<ClockPunches>(headerValues, "clock_punches", "time").Result.Where(r => r.row.PunchedOut == 1).Select(s => s.row).ToList();
+			var orderSummary = GetOrderSummary(orders);
 
-                var punches = reader.GetTable<ClockPunches>("clock_punches", "time").Result.Where(r => r.row.PunchedOut == 1).Select(s => s.row).ToList();
-                punches.ForEach(p => p.DayOfWeek = p.Time.DayOfWeek);
-                WriteData(punches);
+			punches.ForEach(p => p.DayOfWeek = p.Time.DayOfWeek);
 
-                var serverHours = GetServerSummary(punches, classes);
-				
-				WriteData(serverHours);
+			var serverHours = GetServerSummary(punches, classes);
 
-                Helper.GetData(serverHours, orderSummary);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
+			WriteData(punches);
+			WriteData(orderSummary);
+			WriteData(orders);
+			WriteData(serverHours);
 
+			Helper.GetData(sheetId, serverHours, orderSummary);
+		}
 
-            Console.WriteLine("Done!");
-            Console.ReadLine();
-        }
+		private static List<SalesSummary> GetOrderSummary(List<Order> orders)
+		{
+			return (from order in orders
+					group order by order.ClosedDate.DayOfWeek into orderGroup
+					select new SalesSummary
+					{
+						DayOfWeek = orderGroup.Key,
+						ServiceFee = orderGroup.Sum(x => x.AutoGratuityCard + x.AutoGratuityCash + x.AutoGratuityOther),
+						NetSales = orderGroup.Sum(x => x.Subtotal - x.Discount),
+					}).ToList();
+		}
 
-        private static List<ServerHours> GetServerSummary(List<ClockPunch> punches, List<EmployeeClass> classes)
-        {
-            var serverHours = new List<ServerHours>();
-            foreach (var item in punches)
-            {
-	            var server = serverHours.FirstOrDefault(s => s.ServerId == item.ServerId && s.RoleId == item.RoleId);
-                if (server == null)
-                {
-                    server = new ServerHours
-                    {
-                        ServerId = item.ServerId,
-                        EmployeeName = item.Server,
-                        Position = classes.FirstOrDefault(c => c.Id == item.RoleId)?.Title ?? item.RoleId.ToString(),
+		private static List<ServerHours> GetServerSummary(List<ClockPunch> punches, List<EmployeeClass> classes)
+		{
+			var serverHours = new List<ServerHours>();
+			foreach (var item in punches)
+			{
+				var server = serverHours.FirstOrDefault(s => s.ServerId == item.ServerId && s.RoleId == item.RoleId);
+				if (server == null)
+				{
+					server = new ServerHours
+					{
+						ServerId = item.ServerId,
+						EmployeeName = item.Server,
+						Position = classes.FirstOrDefault(c => c.Id == item.RoleId)?.Title ?? item.RoleId.ToString(),
 						RoleId = item.RoleId,
-                        PayRate = item.Payrate
-                    };
+						PayRate = item.Payrate
+					};
 
-                    serverHours.Add(server);
-                }
+					serverHours.Add(server);
+				}
 
-                switch (item.Time.DayOfWeek)
-                {
-                    case DayOfWeek.Monday:
-                        server.Monday += item.Hours;
-                        break;
-                    case DayOfWeek.Tuesday:
-                        server.Tuesday += item.Hours;
-                        break;
-                    case DayOfWeek.Wednesday:
-                        server.Wednesday += item.Hours;
-                        break;
-                    case DayOfWeek.Thursday:
-                        server.Thursday += item.Hours;
-                        break;
-                    case DayOfWeek.Friday:
-                        server.Friday += item.Hours;
-                        break;
-                    case DayOfWeek.Saturday:
-                        server.Saturday += item.Hours;
-                        break;
-                    case DayOfWeek.Sunday:
-                        server.Sunday += item.Hours;
-                        break;
-                }
-            }
+				switch (item.Time.DayOfWeek)
+				{
+					case DayOfWeek.Monday:
+						server.Monday += item.Hours;
+						break;
+					case DayOfWeek.Tuesday:
+						server.Tuesday += item.Hours;
+						break;
+					case DayOfWeek.Wednesday:
+						server.Wednesday += item.Hours;
+						break;
+					case DayOfWeek.Thursday:
+						server.Thursday += item.Hours;
+						break;
+					case DayOfWeek.Friday:
+						server.Friday += item.Hours;
+						break;
+					case DayOfWeek.Saturday:
+						server.Saturday += item.Hours;
+						break;
+					case DayOfWeek.Sunday:
+						server.Sunday += item.Hours;
+						break;
+				}
+			}
 
-            //foreach (var server in serverHours)
-            //{
-            //    if (!(Math.Abs(server.PayRate) <= 0))
-            //    {
-            //        continue;
-            //    }
+			return serverHours;
+		}
 
-            //    // salaried employees can't have more than 8 hours
-            //    server.Monday = Math.Min(server.Monday, 8);
-            //    server.Tuesday = Math.Min(server.Tuesday, 8);
-            //    server.Wednesday = Math.Min(server.Wednesday, 8);
-            //    server.Thursday = Math.Min(server.Thursday, 8);
-            //    server.Friday = Math.Min(server.Friday, 8);
-            //    server.Saturday = Math.Min(server.Saturday, 8);
-            //    server.Sunday = Math.Min(server.Sunday, 8);
-            //}
+		private static void WriteData<T>(ICollection<T> data)
+		{
+			var type = typeof(T);
+			var path = Path.Combine(dataPath, $"{type.Name}_{DateTime.Now.Ticks}.csv");
+			if (!File.Exists(path))
+			{
+				var properties = type.GetProperties().AsQueryable().Select(p => p.Name);
+				WriteCsvLine(path, properties.ToArray());
+			}
 
-            return serverHours;
-        }
+			foreach (var item in data)
+			{
+				var line = item.GetType().GetProperties().AsQueryable().Select(p => p.GetValue(item) == null ? string.Empty : p.GetValue(item).ToString()).ToArray();
+				WriteCsvLine(path, line);
+			}
+		}
 
-        private static void WriteData<T>(ICollection<T> data)
-        {
-            var type = typeof(T);
-            var path = Path.Combine(dataPath, $"{type.Name}_{DateTime.Now.Ticks}.csv");
-            if (!File.Exists(path))
-            {
-                var properties = type.GetProperties().AsQueryable().Select(p => p.Name);
-                WriteCsvLine(path, properties.ToArray());
-            }
-
-            foreach (var item in data)
-            {
-                var line = item.GetType().GetProperties().AsQueryable().Select(p => p.GetValue(item) == null ? string.Empty : p.GetValue(item).ToString()).ToArray();
-                WriteCsvLine(path, line);
-            }
-        }
-
-        private static void WriteCsvLine(string path, string[] values)
-        {
-            File.AppendAllLines(path, new[] { string.Join(",", values) });
-        }
-    }
+		private static void WriteCsvLine(string path, string[] values)
+		{
+			File.AppendAllLines(path, new[] { string.Join(",", values) });
+		}
+	}
 }

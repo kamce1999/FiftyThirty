@@ -14,11 +14,18 @@ namespace Fifty.Lavu
 	{
 		private const string ApiUrl = "https://api.poslavu.com/cp/reqserv/";
 
+		private readonly DateTime runDate;
+
 		private string Start { get; set; }
 
 		private string End { get; set; }
 
-		public async Task<IList<T>> GetTable<T>(string table, string filter)
+		public LavuReader(DateTime runDate)
+		{
+			this.runDate = runDate;
+		}
+
+		public async Task<IList<T>> GetTable<T>(ApiHeaderValues headerValues, string table, string filter)
 		{
 			var results = new List<T>();
 			var skip = 0;
@@ -32,7 +39,7 @@ namespace Fifty.Lavu
 
 				do
 				{
-					var doc = await GetResponse(client, table, filter, skip, take);
+					var doc = await GetResponse(client, headerValues, table, filter, skip, take);
 
 					var rows = doc.SelectSingleNode("results")?.SelectNodes("row");
 					if (rows == null)
@@ -57,24 +64,23 @@ namespace Fifty.Lavu
 
 		private void SetupDateRange()
 		{
-			var date = DateTime.Now.Date;
-			var dayOfWeek = date.DayOfWeek == DayOfWeek.Sunday ? 7 : (int)date.DayOfWeek;
+			var dayOfWeek = runDate.DayOfWeek == DayOfWeek.Sunday ? 7 : (int)runDate.DayOfWeek;
 			var diff = -dayOfWeek + (int)DayOfWeek.Monday;
-			var monday = date.AddDays(diff);
+			var monday = runDate.AddDays(diff);
 
 			End = monday.AddDays(7).ToString("yyyy-MM-dd HH:mm:ss");
 			Start = monday.ToString("yyyy-MM-dd HH:mm:ss");
 		}
 
-		private async Task<XmlDocument> GetResponse(HttpClient client, string table, string filter, int skip, int take)
+		private async Task<XmlDocument> GetResponse(HttpClient client, ApiHeaderValues headerValues, string table, string filter, int skip, int take)
 		{
 			var uri = new Uri(ApiUrl);
 
 			var data = new List<KeyValuePair<string, string>>
 			{
-				new KeyValuePair<string, string>("dataname", "peel"),
-				new KeyValuePair<string, string>("key", "h6yIkHNczEpwfNnH2wWL"),
-				new KeyValuePair<string, string>("token", "xQYqce8EImAp2hsxn4TQ"),
+				new KeyValuePair<string, string>("dataname", headerValues.DataName),
+				new KeyValuePair<string, string>("key", headerValues.Key),
+				new KeyValuePair<string, string>("token", headerValues.Token),
 				new KeyValuePair<string, string>("table", table),
 				new KeyValuePair<string, string>("value_min", Start),
 				new KeyValuePair<string, string>("value_max", End),

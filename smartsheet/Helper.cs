@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
+using Newtonsoft.Json;
+
 using Smartsheet.Api;
 using Smartsheet.Api.Models;
 
@@ -8,142 +11,62 @@ namespace Fifty.Smartsheet
 {
 	public static class Helper
 	{
-		private const long SheetId = 1854968576665476;
+		private const long SheetIdLog = 2900180946184068;
 		private const string AccessToken = "lsazvdkpo5338ett4b2rpdrvm2";
+		private static Dictionary<string, long> logColumnIdMap = new Dictionary<string, long>();
 		private static Dictionary<string, long> columnIdMap = new Dictionary<string, long>();
 		private static Dictionary<string, int> columnIndexMap = new Dictionary<string, int>();
-		private static Sheet sheet;
+		private static Sheet tipOutSheet;
+		private static Sheet logSheet;
 		private static SmartsheetClient smartsheet;
+		private static long tipOutSheetId;
 
-		public static void GetData(List<ServerHours> serverHours, List<SalesSummary> salesSummary)
+
+		public static void GetData(long sheetId, List<ServerHours> serverHours, List<SalesSummary> salesSummary)
 		{
-			smartsheet = new SmartsheetBuilder().SetAccessToken(AccessToken).Build();
-
-			sheet = smartsheet.SheetResources.GetSheet(SheetId, new[] { SheetLevelInclusion.FORMAT }, null, null, null, null, null, null);
-
-			InitializeColumnMap();
-
-			UpdateServerHours(serverHours);
-
-			UpdateDailySales(salesSummary);
-
-			Console.WriteLine("Loaded " + sheet.Rows.Count + " rows from sheet: " + sheet.Name);
-		}
-
-		private static void UpdateDailySales(List<SalesSummary> salesSummary)
-		{
-			var salesRow = GetRow(columnIdMap[ColumnNames.EmployeeName], "Daily Sales");
-			var serviceFeeRow = GetRow(columnIdMap[ColumnNames.EmployeeName], "Service Fee");
-			var sales = new List<Cell>();
-			var serviceFee = new List<Cell>();
-
-			var test = GetEmptyRow().ToDictionary(k => k.ColumnId);
-			
-			foreach (var daySummary in salesSummary)
+			try
 			{
-				switch (daySummary.DayOfWeek)
-				{
-					case DayOfWeek.Monday:
-						test[columnIdMap[ColumnNames.Monday]].Value = daySummary.NetSales;
-						sales.Add(new Cell { Value = daySummary.NetSales, ColumnId = columnIdMap[ColumnNames.Monday] });
-						serviceFee.Add(new Cell { Value = daySummary.ServiceFee, ColumnId = columnIdMap[ColumnNames.Monday] });
-						break;
-					case DayOfWeek.Tuesday:
-						test[columnIdMap[ColumnNames.Tuesday]].Value = daySummary.NetSales;
-						sales.Add(new Cell { Value = daySummary.NetSales, ColumnId = columnIdMap[ColumnNames.Tuesday] });
-						serviceFee.Add(new Cell { Value = daySummary.ServiceFee, ColumnId = columnIdMap[ColumnNames.Tuesday] });
-						break;
-					case DayOfWeek.Wednesday:
-						test[columnIdMap[ColumnNames.Wednesday]].Value = daySummary.NetSales;
-						sales.Add(new Cell { Value = daySummary.NetSales, ColumnId = columnIdMap[ColumnNames.Wednesday] });
-						serviceFee.Add(new Cell { Value = daySummary.ServiceFee, ColumnId = columnIdMap[ColumnNames.Wednesday] });
-						break;
-					case DayOfWeek.Thursday:
-						test[columnIdMap[ColumnNames.Thursday]].Value = daySummary.NetSales;
-						sales.Add(new Cell { Value = daySummary.NetSales, ColumnId = columnIdMap[ColumnNames.Thursday] });
-						serviceFee.Add(new Cell { Value = daySummary.ServiceFee, ColumnId = columnIdMap[ColumnNames.Thursday] });
-						break;
-					case DayOfWeek.Friday:
-						test[columnIdMap[ColumnNames.Friday]].Value = daySummary.NetSales;
-						sales.Add(new Cell { Value = daySummary.NetSales, ColumnId = columnIdMap[ColumnNames.Friday] });
-						serviceFee.Add(new Cell { Value = daySummary.ServiceFee, ColumnId = columnIdMap[ColumnNames.Friday] });
-						break;
-					case DayOfWeek.Saturday:
-						test[columnIdMap[ColumnNames.Saturday]].Value = daySummary.NetSales;
-						sales.Add(new Cell { Value = daySummary.NetSales, ColumnId = columnIdMap[ColumnNames.Saturday] });
-						serviceFee.Add(new Cell { Value = daySummary.ServiceFee, ColumnId = columnIdMap[ColumnNames.Saturday] });
-						break;
-					case DayOfWeek.Sunday:
-						test[columnIdMap[ColumnNames.Sunday]].Value = daySummary.NetSales;
-						sales.Add(new Cell { Value = daySummary.NetSales, ColumnId = columnIdMap[ColumnNames.Sunday] });
-						serviceFee.Add(new Cell { Value = daySummary.ServiceFee, ColumnId = columnIdMap[ColumnNames.Sunday] });
-						break;
-				}
+				tipOutSheetId = sheetId;
+
+				smartsheet = new SmartsheetBuilder().SetAccessToken(AccessToken).Build();
+
+				InitializeLogSheet();
+
+				InitializeTipeOutSheet();
+
+				UpdateServerHours(serverHours);
+
+				UpdateDailySales(salesSummary);
+
+				LogMessage(LogType.Info, $"Processing complete for: {tipOutSheet.Name}");
 			}
-
-			var tests = test.Values.ToList();
-
-			var rowsToUpdate = new[]
+			catch (Exception ex)
 			{
-				new Row { Id = salesRow.Id, Cells = sales },
-				new Row { Id = serviceFeeRow.Id, Cells = serviceFee }
-			};
-
-			smartsheet.SheetResources.RowResources.UpdateRows(SheetId, rowsToUpdate);
+				LogMessage(LogType.Error, ex.Message);
+			}
 		}
 
-		private static void UpdateServerHours(IList<ServerHours> serverHours)
+		private static void InitializeLogSheet()
 		{
-			var employeeRows = GetEmployeeRows(out var parentRowId);
+			logSheet = smartsheet.SheetResources.GetSheet(SheetIdLog, null, null, null, null, null, null, null);
+			logColumnIdMap = new Dictionary<string, long>();
 
-			ClearEmployeeRows(employeeRows);
-
-			foreach (var server in serverHours.OrderBy(it => it.ServerId).ToList())
+			foreach (var column in logSheet.Columns)
 			{
-				var cells = GetCellValues(server);
-
-				var row = employeeRows.FirstOrDefault(
-					r => Convert.ToInt32(r.Cells[columnIndexMap[ColumnNames.ServerId]].Value) == server.ServerId
-						&& r.Cells[columnIndexMap[ColumnNames.Position]].Value.ToString() == server.Position);
-
-				if (row != null)
+				if (column.Id.HasValue)
 				{
-					var rowToUpdate = new Row { Id = row.Id, Cells = cells };
-					smartsheet.SheetResources.RowResources.UpdateRows(SheetId, new[] { rowToUpdate });
-				}
-				else
-				{
-					var newRow = new Row { ParentId = parentRowId, Cells = cells };
-					smartsheet.SheetResources.RowResources.AddRows(SheetId, new[] { newRow });
+					logColumnIdMap.Add(column.Title, column.Id.Value);
 				}
 			}
 		}
 
-		private static void ClearEmployeeRows(List<Row> employeeRows)
+		private static void InitializeTipeOutSheet()
 		{
-			foreach (var item in employeeRows)
-			{
-				smartsheet.SheetResources.RowResources.UpdateRows(SheetId, new[] { new Row { Id = item.Id, Cells = GetEmptyRow() } });
-			}
-		}
+			tipOutSheet = smartsheet.SheetResources.GetSheet(tipOutSheetId, new[] { SheetLevelInclusion.FORMAT }, null, null, null, null, null, null);
+			columnIdMap = new Dictionary<string, long>();
+			columnIndexMap = new Dictionary<string, int>();
 
-		private static List<Cell> GetEmptyRow()
-		{
-			return new List<Cell>
-				{
-					new Cell { Value = string.Empty, ColumnId = columnIdMap[ColumnNames.Monday] },
-					new Cell { Value = string.Empty, ColumnId = columnIdMap[ColumnNames.Tuesday] },
-					new Cell { Value = string.Empty, ColumnId = columnIdMap[ColumnNames.Wednesday] },
-					new Cell { Value = string.Empty, ColumnId = columnIdMap[ColumnNames.Thursday] },
-					new Cell { Value = string.Empty, ColumnId = columnIdMap[ColumnNames.Friday] },
-					new Cell { Value = string.Empty, ColumnId = columnIdMap[ColumnNames.Saturday] },
-					new Cell { Value = string.Empty, ColumnId = columnIdMap[ColumnNames.Sunday] }
-				};
-		}
-
-		private static void InitializeColumnMap()
-		{
-			foreach (var column in sheet.Columns)
+			foreach (var column in tipOutSheet.Columns)
 			{
 				if (column.Id.HasValue)
 				{
@@ -155,6 +78,138 @@ namespace Fifty.Smartsheet
 					columnIndexMap.Add(column.Title, column.Index.Value);
 				}
 			}
+		}
+
+		private static void UpdateDailySales(IEnumerable<SalesSummary> salesSummary)
+		{
+			var salesRow = GetRow(ColumnNames.EmployeeName, "Daily Sales");
+			var serviceFeeRow = GetRow(ColumnNames.EmployeeName, "Service Fee");
+			var adjustedFeeRow = GetRow(ColumnNames.EmployeeName, "Adjusted Fee");
+			var sales = GetEmptyCellValues().ToDictionary(k => k.ColumnId);
+			var serviceFee = GetEmptyCellValues().ToDictionary(k => k.ColumnId);
+			var adjustedFee = GetEmptyCellValues().ToDictionary(k => k.ColumnId);
+
+			var serviceFeeAddjustment = GetValueAsDouble(adjustedFeeRow.Cells[columnIndexMap[ColumnNames.PayRate]].Value);
+
+			foreach (var daySummary in salesSummary)
+			{
+				switch (daySummary.DayOfWeek)
+				{
+					case DayOfWeek.Monday:
+						sales[columnIdMap[ColumnNames.Monday]].Value = daySummary.NetSales;
+						serviceFee[columnIdMap[ColumnNames.Monday]].Value = daySummary.ServiceFee;
+						adjustedFee[columnIdMap[ColumnNames.Monday]].Value = daySummary.ServiceFee * serviceFeeAddjustment;
+						break;
+					case DayOfWeek.Tuesday:
+						sales[columnIdMap[ColumnNames.Tuesday]].Value = daySummary.NetSales;
+						serviceFee[columnIdMap[ColumnNames.Tuesday]].Value = daySummary.ServiceFee;
+						adjustedFee[columnIdMap[ColumnNames.Tuesday]].Value = daySummary.ServiceFee * serviceFeeAddjustment;
+						break;
+					case DayOfWeek.Wednesday:
+						sales[columnIdMap[ColumnNames.Wednesday]].Value = daySummary.NetSales;
+						serviceFee[columnIdMap[ColumnNames.Wednesday]].Value = daySummary.ServiceFee;
+						adjustedFee[columnIdMap[ColumnNames.Wednesday]].Value = daySummary.ServiceFee * serviceFeeAddjustment;
+						break;
+					case DayOfWeek.Thursday:
+						sales[columnIdMap[ColumnNames.Thursday]].Value = daySummary.NetSales;
+						serviceFee[columnIdMap[ColumnNames.Thursday]].Value = daySummary.ServiceFee;
+						adjustedFee[columnIdMap[ColumnNames.Thursday]].Value = daySummary.ServiceFee * serviceFeeAddjustment;
+						break;
+					case DayOfWeek.Friday:
+						sales[columnIdMap[ColumnNames.Friday]].Value = daySummary.NetSales;
+						serviceFee[columnIdMap[ColumnNames.Friday]].Value = daySummary.ServiceFee;
+						adjustedFee[columnIdMap[ColumnNames.Friday]].Value = daySummary.ServiceFee * serviceFeeAddjustment;
+						break;
+					case DayOfWeek.Saturday:
+						sales[columnIdMap[ColumnNames.Saturday]].Value = daySummary.NetSales;
+						serviceFee[columnIdMap[ColumnNames.Saturday]].Value = daySummary.ServiceFee;
+						adjustedFee[columnIdMap[ColumnNames.Saturday]].Value = daySummary.ServiceFee * serviceFeeAddjustment;
+						break;
+					case DayOfWeek.Sunday:
+						sales[columnIdMap[ColumnNames.Sunday]].Value = daySummary.NetSales;
+						serviceFee[columnIdMap[ColumnNames.Sunday]].Value = daySummary.ServiceFee;
+						adjustedFee[columnIdMap[ColumnNames.Sunday]].Value = daySummary.ServiceFee * serviceFeeAddjustment;
+						break;
+				}
+			}
+
+			var rowsToUpdate = new[]
+			{
+				new Row { Id = salesRow.Id, Cells = sales.Values.ToList() },
+				new Row { Id = serviceFeeRow.Id, Cells = serviceFee.Values.ToList() },
+				new Row { Id = adjustedFeeRow.Id, Cells = adjustedFee.Values.ToList() }
+			};
+
+			smartsheet.SheetResources.RowResources.UpdateRows(tipOutSheetId, rowsToUpdate);
+		}
+
+		private static double GetValueAsDouble(object value)
+		{
+			if (value != null && double.TryParse(value.ToString(), out var serviceFeeAddjustment))
+			{
+				return serviceFeeAddjustment;
+			}
+
+			return 1d;
+		}
+
+		private static void UpdateServerHours(IEnumerable<ServerHours> serverHours)
+		{
+			var employeeRows = GetEmployeeRows(out var parentRowId);
+
+			ClearEmployeeValues(employeeRows);
+
+			foreach (var server in serverHours.OrderBy(it => it.ServerId).ToList())
+			{
+				if (server.ServerId <= 0)
+				{
+					LogMessage(LogType.Error, $"Invalid record! ServerId can't be zero ${JsonConvert.SerializeObject(server)}");
+					continue;
+				}
+
+				var cells = GetCellValues(server);
+
+				var row = employeeRows.FirstOrDefault(
+					r => Convert.ToInt32(r.Cells[columnIndexMap[ColumnNames.ServerId]].Value) == server.ServerId
+						&& r.Cells[columnIndexMap[ColumnNames.Position]].Value.ToString() == server.Position);
+
+				if (row != null)
+				{
+					var rowToUpdate = new Row { Id = row.Id, Cells = cells };
+					smartsheet.SheetResources.RowResources.UpdateRows(tipOutSheetId, new[] { rowToUpdate });
+				}
+				else
+				{
+					var newRow = new Row { ParentId = parentRowId, Cells = cells };
+					smartsheet.SheetResources.RowResources.AddRows(tipOutSheetId, new[] { newRow });
+				}
+			}
+		}
+
+		private static void ClearEmployeeValues(IEnumerable<Row> employeeRows)
+		{
+			var rowsToUpdate = employeeRows
+				.Select(row => new Row { Id = row.Id, Cells = GetEmptyCellValues() })
+				.ToList();
+
+			if (rowsToUpdate.Count > 0)
+			{
+				smartsheet.SheetResources.RowResources.UpdateRows(tipOutSheetId, rowsToUpdate);
+			}
+		}
+
+		private static List<Cell> GetEmptyCellValues()
+		{
+			return new List<Cell>
+				{
+					new Cell { Value = string.Empty, ColumnId = columnIdMap[ColumnNames.Monday] },
+					new Cell { Value = string.Empty, ColumnId = columnIdMap[ColumnNames.Tuesday] },
+					new Cell { Value = string.Empty, ColumnId = columnIdMap[ColumnNames.Wednesday] },
+					new Cell { Value = string.Empty, ColumnId = columnIdMap[ColumnNames.Thursday] },
+					new Cell { Value = string.Empty, ColumnId = columnIdMap[ColumnNames.Friday] },
+					new Cell { Value = string.Empty, ColumnId = columnIdMap[ColumnNames.Saturday] },
+					new Cell { Value = string.Empty, ColumnId = columnIdMap[ColumnNames.Sunday] }
+				};
 		}
 
 		private static List<Cell> GetCellValues(ServerHours server)
@@ -205,15 +260,10 @@ namespace Fifty.Smartsheet
 			return cells;
 		}
 
-		private static float AdjustSalriedHours(bool salaried, float hours)
-		{
-			return (salaried && hours > 8) ? 8.0f : hours;
-		}
-
 		private static List<Row> GetEmployeeRows(out long parentRowId)
 		{
-			var beginRow = GetRow(columnIdMap[ColumnNames.EmployeeName], "Employee Name");
-			var endRow = GetRow(columnIdMap[ColumnNames.EmployeeName], "Salary Employees");
+			var beginRow = GetRow(ColumnNames.EmployeeName, "Employee Name");
+			var endRow = GetRow(ColumnNames.EmployeeName, "Salary Employees");
 
 			if (beginRow == null || endRow == null)
 			{
@@ -222,15 +272,32 @@ namespace Fifty.Smartsheet
 
 			parentRowId = beginRow.Id ?? -1;
 
-			return sheet.Rows.Where(r => r.RowNumber > beginRow.RowNumber && r.RowNumber < endRow.RowNumber).Select(r => r).ToList();
+			return tipOutSheet.Rows.Where(r => r.RowNumber > beginRow.RowNumber && r.RowNumber < endRow.RowNumber).Select(r => r).ToList();
 		}
 
-		private static Row GetRow(long columnId, string filter)
+		private static Row GetRow(string columnName, string filter)
 		{
-			return (from row in sheet.Rows
-					let cellValue = row.Cells.FirstOrDefault(c => c.ColumnId == columnId)?.Value
+			return (from row in tipOutSheet.Rows
+					let cellValue = row.Cells.FirstOrDefault(c => c.ColumnId == columnIdMap[columnName])?.Value
 					where (cellValue ?? string.Empty).ToString() == filter
 					select row).FirstOrDefault();
+		}
+
+		private static void LogMessage(LogType type, string message)
+		{
+			var newRow = new Row
+			{
+				ToTop = true,
+				Cells = new List<Cell>
+				{
+					new Cell { ColumnId = logColumnIdMap[LogColumnNames.LogType], Value = type.ToString() },
+					new Cell { ColumnId = logColumnIdMap[LogColumnNames.LogDate], Value = DateTime.Now },
+					new Cell { ColumnId = logColumnIdMap[LogColumnNames.Sheet], Value = tipOutSheet.Name },
+					new Cell { ColumnId = logColumnIdMap[LogColumnNames.Message], Value = message },
+				}
+			};
+
+			smartsheet.SheetResources.RowResources.AddRows(SheetIdLog, new[] { newRow });
 		}
 	}
 }

@@ -14,8 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\breadcrumb\breadcrumb.csproj" />
-    <ProjectReference Include="..\DataModel\DataModel.csproj" />
     <ProjectReference Include="..\smartsheet\Fifty.Smartsheet.csproj" />
     <ProjectReference Include="..\lavu\fifty.lavu.csproj" />
   </ItemGroup>

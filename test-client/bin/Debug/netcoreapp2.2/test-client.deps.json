@@ -8,14 +8,12 @@
     ".NETCoreApp,Version=v2.2": {
       "test-client/1.0.0": {
         "dependencies": {
-          "DataModel": "1.0.0",
           "Fifty.Lavu": "1.0.0",
           "Fifty.Smartsheet": "1.0.0",
           "Microsoft.EntityFrameworkCore": "2.2.4",
           "Microsoft.EntityFrameworkCore.Design": "2.2.4",
           "Newtonsoft.Json": "12.0.2",
-          "System.Management": "4.5.0",
-          "breadcrumb": "1.0.0"
+          "System.Management": "4.5.0"
         },
         "runtime": {
           "test-client.dll": {}
@@ -503,29 +501,12 @@
         }
       },
       "System.ValueTuple/4.4.0": {},
-      "breadcrumb/1.0.0": {
-        "dependencies": {
-          "Newtonsoft.Json": "12.0.2"
-        },
-        "runtime": {
-          "breadcrumb.dll": {}
-        }
-      },
-      "DataModel/1.0.0": {
-        "dependencies": {
-          "Microsoft.EntityFrameworkCore": "2.2.4",
-          "Newtonsoft.Json": "12.0.2"
-        },
-        "runtime": {
-          "DataModel.dll": {}
-        }
-      },
       "Fifty.Lavu/1.0.0": {
         "dependencies": {
           "Newtonsoft.Json": "12.0.2"
         },
         "runtime": {
-          "fifty.lavu.dll": {}
+          "Fifty.Lavu.dll": {}
         }
       },
       "Fifty.Smartsheet/1.0.0": {
@@ -945,16 +926,6 @@
       "sha512": "sha512-BahUww/+mdP4ARCAh2RQhQTg13wYLVrBb9SYVgW8ZlrwjraGCXHGjo0oIiUfZ34LUZkMMR+RAzR7dEY4S1HeQQ==",
       "path": "system.valuetuple/4.4.0",
       "hashPath": "system.valuetuple.4.4.0.nupkg.sha512"
-    },
-    "breadcrumb/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "DataModel/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
     },
     "Fifty.Lavu/1.0.0": {
       "type": "project",

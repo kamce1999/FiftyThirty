@@ -946,33 +946,6 @@
           "lib/netcoreapp2.0/_._": {}
         }
       },
-      "breadcrumb/1.0.0": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v2.0",
-        "dependencies": {
-          "Newtonsoft.Json": "12.0.2"
-        },
-        "compile": {
-          "bin/placeholder/breadcrumb.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/breadcrumb.dll": {}
-        }
-      },
-      "DataModel/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v2.2",
-        "dependencies": {
-          "Microsoft.EntityFrameworkCore": "2.2.4",
-          "Newtonsoft.Json": "12.0.2"
-        },
-        "compile": {
-          "bin/placeholder/DataModel.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/DataModel.dll": {}
-        }
-      },
       "Fifty.Lavu/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
@@ -3646,16 +3619,6 @@
         "version.txt"
       ]
     },
-    "breadcrumb/1.0.0": {
-      "type": "project",
-      "path": "../breadcrumb/breadcrumb.csproj",
-      "msbuildProject": "../breadcrumb/breadcrumb.csproj"
-    },
-    "DataModel/1.0.0": {
-      "type": "project",
-      "path": "../DataModel/DataModel.csproj",
-      "msbuildProject": "../DataModel/DataModel.csproj"
-    },
     "Fifty.Lavu/1.0.0": {
       "type": "project",
       "path": "../lavu/Fifty.Lavu.csproj",
@@ -3669,15 +3632,13 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.2": [
-      "DataModel >= 1.0.0",
       "Fifty.Lavu >= 1.0.0",
       "Fifty.Smartsheet >= 1.0.0",
       "Microsoft.EntityFrameworkCore >= 2.2.4",
       "Microsoft.EntityFrameworkCore.Design >= 2.2.4",
       "Microsoft.NETCore.App >= 2.2.0",
       "Newtonsoft.Json >= 12.0.2",
-      "System.Management >= 4.5.0",
-      "breadcrumb >= 1.0.0"
+      "System.Management >= 4.5.0"
     ]
   },
   "packageFolders": {
@@ -3710,12 +3671,6 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
-            "C:\\code\\FiftyThirty\\breadcrumb\\breadcrumb.csproj": {
-              "projectPath": "C:\\code\\FiftyThirty\\breadcrumb\\breadcrumb.csproj"
-            },
-            "C:\\code\\FiftyThirty\\DataModel\\DataModel.csproj": {
-              "projectPath": "C:\\code\\FiftyThirty\\DataModel\\DataModel.csproj"
-            },
             "C:\\code\\FiftyThirty\\lavu\\fifty.lavu.csproj": {
               "projectPath": "C:\\code\\FiftyThirty\\lavu\\fifty.lavu.csproj"
             },

@@ -23,12 +23,8 @@ C:\code\FiftyThirty\test-client\bin\Debug\netcoreapp2.2\test-client.runtimeconfi
 C:\code\FiftyThirty\test-client\bin\Debug\netcoreapp2.2\test-client.runtimeconfig.dev.json
 C:\code\FiftyThirty\test-client\bin\Debug\netcoreapp2.2\test-client.dll
 C:\code\FiftyThirty\test-client\bin\Debug\netcoreapp2.2\test-client.pdb
-C:\code\FiftyThirty\test-client\bin\Debug\netcoreapp2.2\breadcrumb.dll
-C:\code\FiftyThirty\test-client\bin\Debug\netcoreapp2.2\DataModel.dll
 C:\code\FiftyThirty\test-client\bin\Debug\netcoreapp2.2\Fifty.Lavu.dll
 C:\code\FiftyThirty\test-client\bin\Debug\netcoreapp2.2\Fifty.Smartsheet.dll
-C:\code\FiftyThirty\test-client\bin\Debug\netcoreapp2.2\breadcrumb.pdb
-C:\code\FiftyThirty\test-client\bin\Debug\netcoreapp2.2\DataModel.pdb
 C:\code\FiftyThirty\test-client\bin\Debug\netcoreapp2.2\Fifty.Smartsheet.pdb
 C:\code\FiftyThirty\test-client\bin\Debug\netcoreapp2.2\Fifty.Lavu.pdb
 C:\code\FiftyThirty\test-client\obj\Debug\netcoreapp2.2\test-client.csprojAssemblyReference.cache
