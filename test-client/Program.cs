@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using Fifty.Lavu;
@@ -27,7 +28,7 @@ namespace test_client
 			Key = "XEiEDX2Ub2w6MmFafDkV",
 			Token = "UJp8Dsx9par3RIatMbYA"
 		};
-		
+
 		public static void Main(string[] args)
 		{
 			try
@@ -41,19 +42,19 @@ namespace test_client
 				Console.Read();
 			}
 		}
-
+		
 		public static void DoWork(ApiHeaderValues headerValues, long sheetId)
 		{
-			var reader = new LavuReader(DateTime.Now.AddDays(-1));
-
+			var reader = new LavuReader(DateTime.Now);
+			
 			var classes = reader.GetTable<EmployeeClasses>(headerValues, "emp_classes", null).Result.Select(s => s.row).ToList();
 			var orders = reader.GetTable<Orders>(headerValues, "orders", "closed").Result.Select(s => s.row).ToList();
 			var punches = reader.GetTable<ClockPunches>(headerValues, "clock_punches", "time").Result.Where(r => r.row.PunchedOut == 1).Select(s => s.row).ToList();
-			var orderSummary = GetOrderSummary(orders);
-
+			
 			punches.ForEach(p => p.DayOfWeek = p.Time.DayOfWeek);
 
 			var serverHours = GetServerSummary(punches, classes);
+			var orderSummary = GetOrderSummary(orders);
 
 			WriteData(punches);
 			WriteData(orderSummary);
@@ -70,7 +71,8 @@ namespace test_client
 					select new SalesSummary
 					{
 						DayOfWeek = orderGroup.Key,
-						ServiceFee = orderGroup.Sum(x => x.AutoGratuityCard + x.AutoGratuityCash + x.AutoGratuityOther),
+						ServiceFee = orderGroup.Sum(x => x.Gratuity),
+						AutoGratuityTotal = orderGroup.Sum(x => x.AutoGratuityCard + x.AutoGratuityCash + x.AutoGratuityOther),
 						NetSales = orderGroup.Sum(x => x.Subtotal - x.Discount),
 					}).ToList();
 		}

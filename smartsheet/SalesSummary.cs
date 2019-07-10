@@ -9,5 +9,7 @@ namespace Fifty.Smartsheet
         public double ServiceFee { get; set; }
 
         public double NetSales { get; set; }
+
+	    public double AutoGratuityTotal { get; set; }
     }
 }

@@ -60,6 +60,8 @@ Graphics
 *.mdf
 *.ldf
 
-
+/test-client/bin/Debug/
+/test-client/obj/
+/test-client/obj/Debug/
 .vs/
 

@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using Newtonsoft.Json;
-
 using Smartsheet.Api;
 using Smartsheet.Api.Models;
 
@@ -145,9 +143,9 @@ namespace Fifty.Smartsheet
 
 		private static double GetValueAsDouble(object value)
 		{
-			if (value != null && double.TryParse(value.ToString(), out var serviceFeeAddjustment))
+			if (value != null && double.TryParse(value.ToString(), out var parsedValue))
 			{
-				return serviceFeeAddjustment;
+				return parsedValue;
 			}
 
 			return 1d;

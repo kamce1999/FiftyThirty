@@ -22,7 +22,7 @@ namespace Fifty.Lavu
 
 		public LavuReader(DateTime runDate)
 		{
-			this.runDate = runDate;
+			this.runDate = runDate.Date;
 		}
 
 		public async Task<IList<T>> GetTable<T>(ApiHeaderValues headerValues, string table, string filter)
