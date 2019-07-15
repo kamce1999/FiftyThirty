@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Fifty.Lavu
 {
-	public class ApiHeaderValues
+	public class LavuApiHeaderValues
 	{
 		public string DataName { get; set; }
 

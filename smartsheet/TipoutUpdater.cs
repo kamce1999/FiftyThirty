@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Fifty.Shared;
 using Newtonsoft.Json;
 using Smartsheet.Api;
 using Smartsheet.Api.Models;
 
 namespace Fifty.Smartsheet
 {
-	public static class Helper
+	public static class TipoutUpdater
 	{
-		private const long SheetIdLog = 2900180946184068;
-		private const string AccessToken = "lsazvdkpo5338ett4b2rpdrvm2";
 		private static Dictionary<string, long> logColumnIdMap = new Dictionary<string, long>();
 		private static Dictionary<string, long> columnIdMap = new Dictionary<string, long>();
 		private static Dictionary<string, int> columnIndexMap = new Dictionary<string, int>();
@@ -18,15 +17,17 @@ namespace Fifty.Smartsheet
 		private static Sheet logSheet;
 		private static SmartsheetClient smartsheet;
 		private static long tipOutSheetId;
+		private static long sheetIdLog;
+		private static string accessToken;
 
-
-		public static void GetData(long sheetId, List<ServerHours> serverHours, List<SalesSummary> salesSummary)
+		public static void Update(long sheetId, List<ServerHours> serverHours, List<SalesSummary> salesSummary)
 		{
 			try
 			{
+				accessToken = ConfigurationVariables.SmartsheetToken;
 				tipOutSheetId = sheetId;
-
-				smartsheet = new SmartsheetBuilder().SetAccessToken(AccessToken).Build();
+								
+				smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
 
 				InitializeLogSheet();
 
@@ -46,7 +47,9 @@ namespace Fifty.Smartsheet
 
 		private static void InitializeLogSheet()
 		{
-			logSheet = smartsheet.SheetResources.GetSheet(SheetIdLog, null, null, null, null, null, null, null);
+			sheetIdLog = ConfigurationVariables.SheetIdLog;
+
+			logSheet = smartsheet.SheetResources.GetSheet(sheetIdLog, null, null, null, null, null, null, null);
 			logColumnIdMap = new Dictionary<string, long>();
 
 			foreach (var column in logSheet.Columns)
@@ -61,6 +64,7 @@ namespace Fifty.Smartsheet
 		private static void InitializeTipeOutSheet()
 		{
 			tipOutSheet = smartsheet.SheetResources.GetSheet(tipOutSheetId, new[] { SheetLevelInclusion.FORMAT }, null, null, null, null, null, null);
+
 			columnIdMap = new Dictionary<string, long>();
 			columnIndexMap = new Dictionary<string, int>();
 
@@ -82,13 +86,9 @@ namespace Fifty.Smartsheet
 		{
 			var salesRow = GetRow(ColumnNames.EmployeeName, "Daily Sales");
 			var serviceFeeRow = GetRow(ColumnNames.EmployeeName, "Service Fee");
-			var adjustedFeeRow = GetRow(ColumnNames.EmployeeName, "Adjusted Fee");
 			var sales = GetEmptyCellValues().ToDictionary(k => k.ColumnId);
 			var serviceFee = GetEmptyCellValues().ToDictionary(k => k.ColumnId);
-			var adjustedFee = GetEmptyCellValues().ToDictionary(k => k.ColumnId);
-
-			var serviceFeeAddjustment = GetValueAsDouble(adjustedFeeRow.Cells[columnIndexMap[ColumnNames.PayRate]].Value);
-
+			
 			foreach (var daySummary in salesSummary)
 			{
 				switch (daySummary.DayOfWeek)
@@ -96,37 +96,30 @@ namespace Fifty.Smartsheet
 					case DayOfWeek.Monday:
 						sales[columnIdMap[ColumnNames.Monday]].Value = daySummary.NetSales;
 						serviceFee[columnIdMap[ColumnNames.Monday]].Value = daySummary.ServiceFee;
-						adjustedFee[columnIdMap[ColumnNames.Monday]].Value = daySummary.ServiceFee * serviceFeeAddjustment;
 						break;
 					case DayOfWeek.Tuesday:
 						sales[columnIdMap[ColumnNames.Tuesday]].Value = daySummary.NetSales;
 						serviceFee[columnIdMap[ColumnNames.Tuesday]].Value = daySummary.ServiceFee;
-						adjustedFee[columnIdMap[ColumnNames.Tuesday]].Value = daySummary.ServiceFee * serviceFeeAddjustment;
 						break;
 					case DayOfWeek.Wednesday:
 						sales[columnIdMap[ColumnNames.Wednesday]].Value = daySummary.NetSales;
 						serviceFee[columnIdMap[ColumnNames.Wednesday]].Value = daySummary.ServiceFee;
-						adjustedFee[columnIdMap[ColumnNames.Wednesday]].Value = daySummary.ServiceFee * serviceFeeAddjustment;
 						break;
 					case DayOfWeek.Thursday:
 						sales[columnIdMap[ColumnNames.Thursday]].Value = daySummary.NetSales;
 						serviceFee[columnIdMap[ColumnNames.Thursday]].Value = daySummary.ServiceFee;
-						adjustedFee[columnIdMap[ColumnNames.Thursday]].Value = daySummary.ServiceFee * serviceFeeAddjustment;
 						break;
 					case DayOfWeek.Friday:
 						sales[columnIdMap[ColumnNames.Friday]].Value = daySummary.NetSales;
 						serviceFee[columnIdMap[ColumnNames.Friday]].Value = daySummary.ServiceFee;
-						adjustedFee[columnIdMap[ColumnNames.Friday]].Value = daySummary.ServiceFee * serviceFeeAddjustment;
 						break;
 					case DayOfWeek.Saturday:
 						sales[columnIdMap[ColumnNames.Saturday]].Value = daySummary.NetSales;
 						serviceFee[columnIdMap[ColumnNames.Saturday]].Value = daySummary.ServiceFee;
-						adjustedFee[columnIdMap[ColumnNames.Saturday]].Value = daySummary.ServiceFee * serviceFeeAddjustment;
 						break;
 					case DayOfWeek.Sunday:
 						sales[columnIdMap[ColumnNames.Sunday]].Value = daySummary.NetSales;
 						serviceFee[columnIdMap[ColumnNames.Sunday]].Value = daySummary.ServiceFee;
-						adjustedFee[columnIdMap[ColumnNames.Sunday]].Value = daySummary.ServiceFee * serviceFeeAddjustment;
 						break;
 				}
 			}
@@ -134,23 +127,12 @@ namespace Fifty.Smartsheet
 			var rowsToUpdate = new[]
 			{
 				new Row { Id = salesRow.Id, Cells = sales.Values.ToList() },
-				new Row { Id = serviceFeeRow.Id, Cells = serviceFee.Values.ToList() },
-				new Row { Id = adjustedFeeRow.Id, Cells = adjustedFee.Values.ToList() }
+				new Row { Id = serviceFeeRow.Id, Cells = serviceFee.Values.ToList() }
 			};
 
 			smartsheet.SheetResources.RowResources.UpdateRows(tipOutSheetId, rowsToUpdate);
 		}
-
-		private static double GetValueAsDouble(object value)
-		{
-			if (value != null && double.TryParse(value.ToString(), out var parsedValue))
-			{
-				return parsedValue;
-			}
-
-			return 1d;
-		}
-
+		
 		private static void UpdateServerHours(IEnumerable<ServerHours> serverHours)
 		{
 			var employeeRows = GetEmployeeRows(out var parentRowId);
@@ -295,7 +277,7 @@ namespace Fifty.Smartsheet
 				}
 			};
 
-			smartsheet.SheetResources.RowResources.AddRows(SheetIdLog, new[] { newRow });
+			smartsheet.SheetResources.RowResources.AddRows(sheetIdLog, new[] { newRow });
 		}
 	}
 }

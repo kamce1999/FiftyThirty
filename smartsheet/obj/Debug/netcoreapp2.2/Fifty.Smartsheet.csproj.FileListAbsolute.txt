@@ -19,3 +19,5 @@ C:\code\FiftyThirty\smartsheet\obj\Debug\netcoreapp2.2\Fifty.Smartsheet.pdb
 C:\code\FiftyThirty\smartsheet\bin\Debug\netcoreapp2.2\fifty.lavu.dll
 C:\code\FiftyThirty\smartsheet\bin\Debug\netcoreapp2.2\fifty.lavu.pdb
 C:\code\FiftyThirty\smartsheet\obj\Debug\netcoreapp2.2\Fifty.Smartsheet.csproj.CopyComplete
+C:\code\FiftyThirty\smartsheet\bin\Debug\netcoreapp2.2\Fifty.Shared.dll
+C:\code\FiftyThirty\smartsheet\bin\Debug\netcoreapp2.2\Fifty.Shared.pdb

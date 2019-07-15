@@ -1,0 +1,15 @@
+{
+  "profiles": {
+    "test-client": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "LavuConfigPeel": "eyJEYXRhTmFtZSI6InBlZWwiLCJLZXkiOiJoNnlJa0hOY3pFcHdmTm5IMndXTCIsIlRva2VuIjoieFFZcWNlOEVJbUFwMmhzeG40VFEifQ==",
+        "LavuConfigFifty": "eyJEYXRhTmFtZSI6IjUwXzMwXyIsIktleSI6IlhFaUVEWDJVYjJ3Nk1tRmFmRGtWIiwiVG9rZW4iOiJVSnA4RHN4OXBhcjNSSWF0TWJZQSJ9",
+        "SmartsheetToken": "lsazvdkpo5338ett4b2rpdrvm2",
+        "SheetId5030": "8475254654822276",
+        "SheetIdLog": "2900180946184068",
+        "SheetIdPeel": "1854968576665476"
+      }
+    }
+  }
+}

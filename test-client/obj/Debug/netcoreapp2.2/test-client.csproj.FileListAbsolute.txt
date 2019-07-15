@@ -34,3 +34,5 @@ C:\code\FiftyThirty\test-client\obj\Debug\netcoreapp2.2\test-client.AssemblyInfo
 C:\code\FiftyThirty\test-client\obj\Debug\netcoreapp2.2\test-client.csproj.CopyComplete
 C:\code\FiftyThirty\test-client\obj\Debug\netcoreapp2.2\test-client.dll
 C:\code\FiftyThirty\test-client\obj\Debug\netcoreapp2.2\test-client.pdb
+C:\code\FiftyThirty\test-client\bin\Debug\netcoreapp2.2\Fifty.Shared.dll
+C:\code\FiftyThirty\test-client\bin\Debug\netcoreapp2.2\Fifty.Shared.pdb

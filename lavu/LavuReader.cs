@@ -25,7 +25,7 @@ namespace Fifty.Lavu
 			this.runDate = runDate.Date;
 		}
 
-		public async Task<IList<T>> GetTable<T>(ApiHeaderValues headerValues, string table, string filter)
+		public async Task<IList<T>> GetTable<T>(LavuApiHeaderValues headerValues, string table, string filter)
 		{
 			var results = new List<T>();
 			var skip = 0;
@@ -72,7 +72,7 @@ namespace Fifty.Lavu
 			Start = monday.ToString("yyyy-MM-dd HH:mm:ss");
 		}
 
-		private async Task<XmlDocument> GetResponse(HttpClient client, ApiHeaderValues headerValues, string table, string filter, int skip, int take)
+		private async Task<XmlDocument> GetResponse(HttpClient client, LavuApiHeaderValues headerValues, string table, string filter, int skip, int take)
 		{
 			var uri = new Uri(ApiUrl);
 

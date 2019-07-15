@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fifty.Smartsheet", "smartsh
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fifty.Lavu", "lavu\Fifty.Lavu.csproj", "{9FCF0D18-E69A-4C32-BB04-99EFBA215C83}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fifty.Shared", "Fifty.Shared\Fifty.Shared.csproj", "{160E01C2-FEFA-4DF0-89AC-2E1645DECAE4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{9FCF0D18-E69A-4C32-BB04-99EFBA215C83}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9FCF0D18-E69A-4C32-BB04-99EFBA215C83}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9FCF0D18-E69A-4C32-BB04-99EFBA215C83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{160E01C2-FEFA-4DF0-89AC-2E1645DECAE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{160E01C2-FEFA-4DF0-89AC-2E1645DECAE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{160E01C2-FEFA-4DF0-89AC-2E1645DECAE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{160E01C2-FEFA-4DF0-89AC-2E1645DECAE4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

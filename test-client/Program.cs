@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using Fifty.Lavu;
+using Fifty.Shared;
 using Fifty.Smartsheet;
+using Newtonsoft.Json;
 
 namespace test_client
 {
@@ -12,29 +13,18 @@ namespace test_client
 	{
 		private static string dataPath = "C:\\code\\breadcrumb";
 
-		private const long SheetId5030 = 8475254654822276;
-		private const long SheetIdPeel = 1854968576665476;
-
-		private static ApiHeaderValues peelHeaderValues = new ApiHeaderValues
-		{
-			DataName = "peel",
-			Key = "h6yIkHNczEpwfNnH2wWL",
-			Token = "xQYqce8EImAp2hsxn4TQ"
-		};
-
-		private static ApiHeaderValues fiftyHeaderValues = new ApiHeaderValues
-		{
-			DataName = "50_30_",
-			Key = "XEiEDX2Ub2w6MmFafDkV",
-			Token = "UJp8Dsx9par3RIatMbYA"
-		};
 
 		public static void Main(string[] args)
 		{
 			try
 			{
-				DoWork(peelHeaderValues, SheetIdPeel);
-				DoWork(fiftyHeaderValues, SheetId5030);
+				Console.WriteLine("updating peel tip out......");
+				DoWork(GetLavuHeader(ConfigurationVariables.LavuConfigPeel), ConfigurationVariables.SheetIdPeel);
+
+				Console.WriteLine("updating 5030 tip out......");
+				DoWork(GetLavuHeader(ConfigurationVariables.LavuConfigFifty), ConfigurationVariables.SheetId5030);
+
+				Console.WriteLine("done!");
 			}
 			catch (Exception ex)
 			{
@@ -42,8 +32,8 @@ namespace test_client
 				Console.Read();
 			}
 		}
-		
-		public static void DoWork(ApiHeaderValues headerValues, long sheetId)
+
+		public static void DoWork(LavuApiHeaderValues headerValues, long sheetId)
 		{
 			var reader = new LavuReader(DateTime.Now);
 			
@@ -54,19 +44,28 @@ namespace test_client
 			punches.ForEach(p => p.DayOfWeek = p.Time.DayOfWeek);
 
 			var serverHours = GetServerSummary(punches, classes);
+
 			var orderSummary = GetOrderSummary(orders);
 
-			WriteData(punches);
-			WriteData(orderSummary);
-			WriteData(orders);
-			WriteData(serverHours);
+			TipoutUpdater.Update(sheetId, serverHours, orderSummary);
 
-			Helper.GetData(sheetId, serverHours, orderSummary);
+			//WriteData(orderSummary);
+			//WriteData(orders);
 		}
 
-		private static List<SalesSummary> GetOrderSummary(List<Order> orders)
+		private static LavuApiHeaderValues GetLavuHeader(string encodedData)
+		{
+			var base64EncodedBytes = Convert.FromBase64String(encodedData);
+
+			var decoded = System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
+
+			return JsonConvert.DeserializeObject<LavuApiHeaderValues>(decoded);
+		}
+		
+		private static List<SalesSummary> GetOrderSummary(IEnumerable<Order> orders)
 		{
 			return (from order in orders
+					where order.Void == 0
 					group order by order.ClosedDate.DayOfWeek into orderGroup
 					select new SalesSummary
 					{
@@ -126,6 +125,7 @@ namespace test_client
 			return serverHours;
 		}
 
+		#region debugstuff
 		private static void WriteData<T>(ICollection<T> data)
 		{
 			var type = typeof(T);
@@ -147,5 +147,6 @@ namespace test_client
 		{
 			File.AppendAllLines(path, new[] { string.Join(",", values) });
 		}
+		#endregion
 	}
 }

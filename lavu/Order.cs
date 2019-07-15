@@ -6,7 +6,10 @@ namespace Fifty.Lavu
     {
         public long Id { get; set; }
 
-        [Newtonsoft.Json.JsonProperty("location_id", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+	    [Newtonsoft.Json.JsonProperty("order_id", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+		public string OrderId { get; set; }
+
+		[Newtonsoft.Json.JsonProperty("location_id", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public long LocationId { get; set; }
 
         [Newtonsoft.Json.JsonProperty("closed", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
