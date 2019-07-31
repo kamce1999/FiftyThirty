@@ -567,7 +567,7 @@
           "System.Runtime.Extensions": "4.3.1"
         },
         "runtime": {
-          "fifty.lavu.dll": {}
+          "Fifty.Lavu.dll": {}
         }
       },
       "Fifty.Shared/1.0.0": {

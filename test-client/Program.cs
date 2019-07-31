@@ -13,14 +13,19 @@ namespace test_client
 	{
 		private static string dataPath = "C:\\code\\breadcrumb";
 
+		private static string location = string.Empty;
+
 
 		public static void Main(string[] args)
 		{
 			try
 			{
+
 				Console.WriteLine("updating peel tip out......");
+				location = "peel";
 				DoWork(GetLavuHeader(ConfigurationVariables.LavuConfigPeel), ConfigurationVariables.SheetIdPeel);
 
+				location = "fifty";
 				Console.WriteLine("updating 5030 tip out......");
 				DoWork(GetLavuHeader(ConfigurationVariables.LavuConfigFifty), ConfigurationVariables.SheetId5030);
 
@@ -35,7 +40,7 @@ namespace test_client
 
 		public static void DoWork(LavuApiHeaderValues headerValues, long sheetId)
 		{
-			var reader = new LavuReader(DateTime.Now);
+			var reader = new LavuReader(DateTime.Now.AddDays(-1));
 			
 			var classes = reader.GetTable<EmployeeClasses>(headerValues, "emp_classes", null).Result.Select(s => s.row).ToList();
 			var orders = reader.GetTable<Orders>(headerValues, "orders", "closed").Result.Select(s => s.row).ToList();
@@ -50,7 +55,7 @@ namespace test_client
 			TipoutUpdater.Update(sheetId, serverHours, orderSummary);
 
 			//WriteData(orderSummary);
-			//WriteData(orders);
+			WriteData(orders);
 		}
 
 		private static LavuApiHeaderValues GetLavuHeader(string encodedData)
@@ -129,7 +134,7 @@ namespace test_client
 		private static void WriteData<T>(ICollection<T> data)
 		{
 			var type = typeof(T);
-			var path = Path.Combine(dataPath, $"{type.Name}_{DateTime.Now.Ticks}.csv");
+			var path = Path.Combine(dataPath, $"{type.Name}_{location}_{DateTime.Now.Ticks}.csv");
 			if (!File.Exists(path))
 			{
 				var properties = type.GetProperties().AsQueryable().Select(p => p.Name);

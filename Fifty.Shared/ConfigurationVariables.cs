@@ -16,6 +16,8 @@ namespace Fifty.Shared
 		public static long SheetIdLog => GetLongValue("SheetIdLog");
 
 		public static long SheetIdPeel => GetLongValue("SheetIdPeel");
+		public static string StartTime => GetStringValue("StartTime");
+		public static string Frequency => GetStringValue("Frequency");
 
 		public static string GetStringValue(string key)
 		{

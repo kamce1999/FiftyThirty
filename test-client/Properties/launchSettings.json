@@ -8,7 +8,9 @@
         "SmartsheetToken": "lsazvdkpo5338ett4b2rpdrvm2",
         "SheetId5030": "8475254654822276",
         "SheetIdLog": "2900180946184068",
-        "SheetIdPeel": "1854968576665476"
+        "SheetIdPeel": "1854968576665476",
+        "StartTime": "12:00:00",
+        "Frequency": "00:01:00" 
       }
     }
   }
