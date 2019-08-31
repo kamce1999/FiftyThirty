@@ -14,8 +14,7 @@ namespace test_client
         private static string dataPath = "C:\\code\\breadcrumb";
 
         private static string location = string.Empty;
-
-
+        
         public static void Main(string[] args)
         {
             try
@@ -41,8 +40,10 @@ namespace test_client
             var orders = reader.GetTable<Orders>(headerValues, "orders", "closed").Result.Select(s => s.row).ToList();
             var punches = reader.GetTable<ClockPunches>(headerValues, "clock_punches", "time").Result.Where(r => r.row.PunchedOut == 1).Select(s => s.row).ToList();
 
-            punches.ForEach(p => p.DayOfWeek = p.Time.DayOfWeek);
+            var x = punches.Where(y => y.ServerId == 35).ToList();
 
+            punches.ForEach(p => p.DayOfWeek = p.Time.DayOfWeek);
+            
             var serverHours = GetServerSummary(punches, classes);
 
             var orderSummary = GetOrderSummary(orders);
@@ -96,30 +97,14 @@ namespace test_client
                     serverHours.Add(server);
                 }
 
-                switch (item.Time.DayOfWeek)
+                var dailyHours = server.Hours.FirstOrDefault(y => y.DayOfWeek == item.DayOfWeek);
+                if (dailyHours == null)
                 {
-                    case DayOfWeek.Monday:
-                        server.Monday += item.Hours;
-                        break;
-                    case DayOfWeek.Tuesday:
-                        server.Tuesday += item.Hours;
-                        break;
-                    case DayOfWeek.Wednesday:
-                        server.Wednesday += item.Hours;
-                        break;
-                    case DayOfWeek.Thursday:
-                        server.Thursday += item.Hours;
-                        break;
-                    case DayOfWeek.Friday:
-                        server.Friday += item.Hours;
-                        break;
-                    case DayOfWeek.Saturday:
-                        server.Saturday += item.Hours;
-                        break;
-                    case DayOfWeek.Sunday:
-                        server.Sunday += item.Hours;
-                        break;
+                    dailyHours = new DailyHours { DayOfWeek = item.DayOfWeek };
+                    server.Hours.Add(dailyHours);
                 }
+
+                dailyHours.Hours += item.Hours;
             }
 
             return serverHours;

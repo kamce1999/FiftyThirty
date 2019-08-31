@@ -204,49 +204,40 @@ namespace Fifty.Smartsheet
 				};
 
             var totalHours = 0F;
-			if (server.Monday > 0)
-			{
-				cells.Add(new Cell { Value = GetMaxHours(totalHours, server.Monday, server.PayRate), ColumnId = columnIdMap[ColumnNames.Monday] });
-                totalHours += server.Monday;
-            }
-			
-			if (server.Tuesday > 0)
-			{
-				cells.Add(new Cell { Value = GetMaxHours(totalHours, server.Tuesday, server.PayRate), ColumnId = columnIdMap[ColumnNames.Tuesday] });
-                totalHours += server.Tuesday;
-            }
+            
+            foreach (var dailyHours in server.Hours.OrderBy(h => h.DayOfWeek))
+            {
+                var adjusted = GetMaxHours(totalHours, dailyHours.Hours, server.PayRate);
 
-			if (server.Wednesday > 0)
-			{
-				cells.Add(new Cell { Value = GetMaxHours(totalHours, server.Wednesday, server.PayRate), ColumnId = columnIdMap[ColumnNames.Wednesday] });
-                totalHours += server.Wednesday;
+                totalHours += adjusted;
+
+                cells.Add(new Cell { Value = adjusted, ColumnId = GetColumnId(dailyHours.DayOfWeek) });
             }
-
-			if (server.Thursday > 0)
-			{
-				cells.Add(new Cell { Value = GetMaxHours(totalHours, server.Thursday, server.PayRate), ColumnId = columnIdMap[ColumnNames.Thursday] });
-                totalHours += server.Thursday;
-            }
-
-			if (server.Friday > 0)
-			{
-				cells.Add(new Cell { Value = GetMaxHours(totalHours, server.Friday, server.PayRate), ColumnId = columnIdMap[ColumnNames.Friday] });
-                totalHours += server.Friday;
-            }
-
-			if (server.Saturday > 0)
-			{
-				cells.Add(new Cell { Value = GetMaxHours(totalHours, server.Saturday, server.PayRate), ColumnId = columnIdMap[ColumnNames.Saturday] });
-                totalHours += server.Saturday;
-            }
-
-			if (server.Sunday > 0)
-			{
-				cells.Add(new Cell { Value = GetMaxHours(totalHours, server.Sunday, server.PayRate), ColumnId = columnIdMap[ColumnNames.Sunday] });
-			}
-
-			return cells;
+            return cells;
 		}
+
+        private static long GetColumnId(DayOfWeek day)
+        {
+            switch (day)
+            {
+                case DayOfWeek.Friday:
+                    return columnIdMap[ColumnNames.Friday];
+                case DayOfWeek.Monday:
+                    return columnIdMap[ColumnNames.Monday];
+                case DayOfWeek.Saturday:
+                    return columnIdMap[ColumnNames.Saturday];
+                case DayOfWeek.Sunday:
+                    return columnIdMap[ColumnNames.Sunday];
+                case DayOfWeek.Thursday:
+                    return columnIdMap[ColumnNames.Thursday];
+                case DayOfWeek.Tuesday:
+                    return columnIdMap[ColumnNames.Tuesday];
+                case DayOfWeek.Wednesday:
+                    return columnIdMap[ColumnNames.Wednesday];
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(day), day, null);
+            }
+        }
 
 		internal static float GetMaxHours(float totalHours, float value, float payRate)
 		{
@@ -256,17 +247,15 @@ namespace Fifty.Smartsheet
 
 			}
 
-            return value > 8 ? 8 : value;
+            if (totalHours + value <= 45)
+            {
+                return value > 8 ? 8 : value;
+            }
 
-   //       if (totalHours + value <= 45)
-			//{
-			//	return value > 8 ? 8 : value;
-			//}
+            var remainingHours = 45 - totalHours;
 
-			//var remainingHours = 45 - totalHours;
-
-			//return (remainingHours <= 45 && remainingHours >= 0) ? remainingHours : 0;
-		}
+            return (remainingHours <= 45 && remainingHours >= 0) ? remainingHours : 0;
+        }
 
 		private static List<Row> GetEmployeeRows(out long parentRowId)
 		{
