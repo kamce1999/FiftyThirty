@@ -35,7 +35,7 @@ namespace Fifty.Lavu
 
 			using (var client = new HttpClient())
 			{
-				var hasMoreData = false;
+				bool hasMoreData;
 
 				do
 				{
@@ -54,7 +54,7 @@ namespace Fifty.Lavu
 					}
 
 					hasMoreData = rows.Count == take;
-					skip = skip + take;
+					skip += take;
 				}
 				while (hasMoreData);
 

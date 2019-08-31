@@ -6,13 +6,9 @@ namespace Fifty.Shared
 	public static class ConfigurationVariables
 	{
 		public static string LavuConfigPeel => GetStringValue("LavuConfigPeel");
-
-		public static string LavuConfigFifty => GetStringValue("LavuConfigFifty");
-
+		
 		public static string SmartsheetToken => GetStringValue("SmartsheetToken");
-
-		public static long SheetId5030 => GetLongValue("SheetId5030");
-
+		
 		public static long SheetIdLog => GetLongValue("SheetIdLog");
 
 		public static long SheetIdPeel => GetLongValue("SheetIdPeel");

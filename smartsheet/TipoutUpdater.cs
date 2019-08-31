@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using Fifty.Shared;
 using Newtonsoft.Json;
 using Smartsheet.Api;
@@ -194,7 +195,7 @@ namespace Fifty.Smartsheet
 
 		private static List<Cell> GetCellValues(ServerHours server)
 		{
-			var cells = new List<Cell>
+            var cells = new List<Cell>
 				{
 					new Cell { Value = server.ServerId, ColumnId = columnIdMap[ColumnNames.ServerId] },
 					new Cell { Value = server.EmployeeName, ColumnId = columnIdMap[ColumnNames.EmployeeName] },
@@ -202,42 +203,69 @@ namespace Fifty.Smartsheet
 					new Cell { Value = server.PayRate, ColumnId = columnIdMap[ColumnNames.PayRate] }
 				};
 
+            var totalHours = 0F;
 			if (server.Monday > 0)
 			{
-				cells.Add(new Cell { Value = server.Monday, ColumnId = columnIdMap[ColumnNames.Monday] });
-			}
-
+				cells.Add(new Cell { Value = GetMaxHours(totalHours, server.Monday, server.PayRate), ColumnId = columnIdMap[ColumnNames.Monday] });
+                totalHours += server.Monday;
+            }
+			
 			if (server.Tuesday > 0)
 			{
-				cells.Add(new Cell { Value = server.Tuesday, ColumnId = columnIdMap[ColumnNames.Tuesday] });
-			}
+				cells.Add(new Cell { Value = GetMaxHours(totalHours, server.Tuesday, server.PayRate), ColumnId = columnIdMap[ColumnNames.Tuesday] });
+                totalHours += server.Tuesday;
+            }
 
 			if (server.Wednesday > 0)
 			{
-				cells.Add(new Cell { Value = server.Wednesday, ColumnId = columnIdMap[ColumnNames.Wednesday] });
-			}
+				cells.Add(new Cell { Value = GetMaxHours(totalHours, server.Wednesday, server.PayRate), ColumnId = columnIdMap[ColumnNames.Wednesday] });
+                totalHours += server.Wednesday;
+            }
 
 			if (server.Thursday > 0)
 			{
-				cells.Add(new Cell { Value = server.Thursday, ColumnId = columnIdMap[ColumnNames.Thursday] });
-			}
+				cells.Add(new Cell { Value = GetMaxHours(totalHours, server.Thursday, server.PayRate), ColumnId = columnIdMap[ColumnNames.Thursday] });
+                totalHours += server.Thursday;
+            }
 
 			if (server.Friday > 0)
 			{
-				cells.Add(new Cell { Value = server.Friday, ColumnId = columnIdMap[ColumnNames.Friday] });
-			}
+				cells.Add(new Cell { Value = GetMaxHours(totalHours, server.Friday, server.PayRate), ColumnId = columnIdMap[ColumnNames.Friday] });
+                totalHours += server.Friday;
+            }
 
 			if (server.Saturday > 0)
 			{
-				cells.Add(new Cell { Value = server.Saturday, ColumnId = columnIdMap[ColumnNames.Saturday] });
-			}
+				cells.Add(new Cell { Value = GetMaxHours(totalHours, server.Saturday, server.PayRate), ColumnId = columnIdMap[ColumnNames.Saturday] });
+                totalHours += server.Saturday;
+            }
 
 			if (server.Sunday > 0)
 			{
-				cells.Add(new Cell { Value = server.Sunday, ColumnId = columnIdMap[ColumnNames.Sunday] });
+				cells.Add(new Cell { Value = GetMaxHours(totalHours, server.Sunday, server.PayRate), ColumnId = columnIdMap[ColumnNames.Sunday] });
 			}
 
 			return cells;
+		}
+
+		internal static float GetMaxHours(float totalHours, float value, float payRate)
+		{
+			if (payRate > 0)
+			{
+				return value;
+
+			}
+
+            return value > 8 ? 8 : value;
+
+   //       if (totalHours + value <= 45)
+			//{
+			//	return value > 8 ? 8 : value;
+			//}
+
+			//var remainingHours = 45 - totalHours;
+
+			//return (remainingHours <= 45 && remainingHours >= 0) ? remainingHours : 0;
 		}
 
 		private static List<Row> GetEmployeeRows(out long parentRowId)

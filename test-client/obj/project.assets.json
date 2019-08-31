@@ -3850,6 +3850,7 @@
       "Microsoft.EntityFrameworkCore.Design >= 2.2.4",
       "Microsoft.Extensions.Configuration.Json >= 2.2.0",
       "Microsoft.Extensions.Hosting >= 2.2.0",
+      "Microsoft.Extensions.Hosting.Abstractions >= 2.2.0",
       "Microsoft.NETCore.App >= 2.2.0",
       "Newtonsoft.Json >= 12.0.2",
       "System.Management >= 4.5.0",
@@ -3920,6 +3921,10 @@
             "version": "[2.2.0, )"
           },
           "Microsoft.Extensions.Hosting": {
+            "target": "Package",
+            "version": "[2.2.0, )"
+          },
+          "Microsoft.Extensions.Hosting.Abstractions": {
             "target": "Package",
             "version": "[2.2.0, )"
           },
