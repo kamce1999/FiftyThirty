@@ -14,3 +14,16 @@ C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\smartsheet\bin\Releas
 C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\smartsheet\bin\Release\netcoreapp2.2\Fifty.Smartsheet.pdb
 C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\smartsheet\obj\Release\netcoreapp2.2\Fifty.Smartsheet.dll
 C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\smartsheet\obj\Release\netcoreapp2.2\Fifty.Smartsheet.pdb
+C:\code\FiftyThirty\smartsheet\bin\Release\netcoreapp2.2\Fifty.Smartsheet.deps.json
+C:\code\FiftyThirty\smartsheet\bin\Release\netcoreapp2.2\Fifty.Smartsheet.dll
+C:\code\FiftyThirty\smartsheet\bin\Release\netcoreapp2.2\Fifty.Smartsheet.pdb
+C:\code\FiftyThirty\smartsheet\bin\Release\netcoreapp2.2\fifty.lavu.dll
+C:\code\FiftyThirty\smartsheet\bin\Release\netcoreapp2.2\Fifty.Shared.dll
+C:\code\FiftyThirty\smartsheet\bin\Release\netcoreapp2.2\Fifty.Shared.pdb
+C:\code\FiftyThirty\smartsheet\bin\Release\netcoreapp2.2\fifty.lavu.pdb
+C:\code\FiftyThirty\smartsheet\obj\Release\netcoreapp2.2\Fifty.Smartsheet.csprojAssemblyReference.cache
+C:\code\FiftyThirty\smartsheet\obj\Release\netcoreapp2.2\Fifty.Smartsheet.AssemblyInfoInputs.cache
+C:\code\FiftyThirty\smartsheet\obj\Release\netcoreapp2.2\Fifty.Smartsheet.AssemblyInfo.cs
+C:\code\FiftyThirty\smartsheet\obj\Release\netcoreapp2.2\Fifty.Smartsheet.csproj.CopyComplete
+C:\code\FiftyThirty\smartsheet\obj\Release\netcoreapp2.2\Fifty.Smartsheet.dll
+C:\code\FiftyThirty\smartsheet\obj\Release\netcoreapp2.2\Fifty.Smartsheet.pdb

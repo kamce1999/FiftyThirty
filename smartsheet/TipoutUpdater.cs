@@ -21,7 +21,7 @@ namespace Fifty.Smartsheet
 		private static long sheetIdLog;
 		private static string accessToken;
 
-		public static void Update(long sheetId, List<ServerHours> serverHours, List<SalesSummary> salesSummary)
+		public static void Update(long sheetId, List<ServerHours> serverHours, List<SalesSummary> salesSummary, bool switchWeeks)
 		{
 			try
 			{
@@ -32,7 +32,9 @@ namespace Fifty.Smartsheet
 
 				InitializeLogSheet();
 
-				InitializeTipeOutSheet();
+				InitializeTipOutSheet();
+
+                CopyLastWeek(switchWeeks);
 
 				UpdateServerHours(serverHours);
 
@@ -46,7 +48,26 @@ namespace Fifty.Smartsheet
 			}
 		}
 
-		private static void InitializeLogSheet()
+        public static void CopyLastWeek(bool switchWeeks)
+        {
+            if (!switchWeeks)
+            {
+                return;
+            }
+
+            var lastMonday = DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek - 6);
+
+            var destination = new ContainerDestination
+            {
+                DestinationId = 3725417489164164,
+                DestinationType = DestinationType.FOLDER,
+                NewName = $"Tip Out Model {lastMonday.ToShortDateString()} - {lastMonday.AddDays(6).ToShortDateString()}"
+            };
+        
+            smartsheet.SheetResources.CopySheet(tipOutSheetId, destination, new List<SheetCopyInclusion> { SheetCopyInclusion.ALL });
+        }
+
+        private static void InitializeLogSheet()
 		{
 			sheetIdLog = ConfigurationVariables.SheetIdLog;
 
@@ -62,7 +83,7 @@ namespace Fifty.Smartsheet
 			}
 		}
 
-		private static void InitializeTipeOutSheet()
+		private static void InitializeTipOutSheet()
 		{
 			tipOutSheet = smartsheet.SheetResources.GetSheet(tipOutSheetId, new[] { SheetLevelInclusion.FORMAT }, null, null, null, null, null, null);
 
@@ -189,7 +210,8 @@ namespace Fifty.Smartsheet
 					new Cell { Value = string.Empty, ColumnId = columnIdMap[ColumnNames.Thursday] },
 					new Cell { Value = string.Empty, ColumnId = columnIdMap[ColumnNames.Friday] },
 					new Cell { Value = string.Empty, ColumnId = columnIdMap[ColumnNames.Saturday] },
-					new Cell { Value = string.Empty, ColumnId = columnIdMap[ColumnNames.Sunday] }
+					new Cell { Value = string.Empty, ColumnId = columnIdMap[ColumnNames.Sunday] },
+					new Cell { Value = string.Empty, ColumnId = columnIdMap[ColumnNames.AdditionalTips] } 
 				};
 		}
 
@@ -202,6 +224,11 @@ namespace Fifty.Smartsheet
 					new Cell { Value = server.Position, ColumnId = columnIdMap[ColumnNames.Position] },
 					new Cell { Value = server.PayRate, ColumnId = columnIdMap[ColumnNames.PayRate] }
 				};
+
+            if (server.AdditionalTips > 0)
+            {
+                cells.Add(new Cell { Value = server.AdditionalTips, ColumnId = columnIdMap[ColumnNames.AdditionalTips] });
+            }
 
             var totalHours = 0F;
             
@@ -296,5 +323,5 @@ namespace Fifty.Smartsheet
 
 			smartsheet.SheetResources.RowResources.AddRows(sheetIdLog, new[] { newRow });
 		}
-	}
+    }
 }

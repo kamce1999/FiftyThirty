@@ -1,14 +1,13 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.2",
-    "signature": "2b21a845eef1cff11c547dee857c9833680aef02"
+    "signature": ""
   },
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v2.2": {
       "test-client/1.0.0": {
         "dependencies": {
-          "Fifty.Lavu": "1.0.0",
           "Fifty.Shared": "1.0.0",
           "Fifty.Smartsheet": "1.0.0",
           "Microsoft.EntityFrameworkCore": "2.2.4",
@@ -18,7 +17,8 @@
           "Microsoft.Extensions.Hosting.Abstractions": "2.2.0",
           "Newtonsoft.Json": "12.0.2",
           "System.Management": "4.5.0",
-          "System.Runtime.Extensions": "4.3.1"
+          "System.Runtime.Extensions": "4.3.1",
+          "fifty.lavu": "1.0.0"
         },
         "runtime": {
           "test-client.dll": {}
@@ -289,16 +289,6 @@
         "dependencies": {
           "System.Security.AccessControl": "4.5.0",
           "System.Security.Principal.Windows": "4.5.0"
-        },
-        "runtimeTargets": {
-          "runtime/unix/lib/_._": {
-            "rid": "unix",
-            "assetType": "runtime"
-          },
-          "runtime/win/lib/_._": {
-            "rid": "win",
-            "assetType": "runtime"
-          }
         }
       },
       "Newtonsoft.Json/12.0.2": {
@@ -554,26 +544,9 @@
       "System.Security.AccessControl/4.5.0": {
         "dependencies": {
           "System.Security.Principal.Windows": "4.5.0"
-        },
-        "runtimeTargets": {
-          "runtime/win/lib/_._": {
-            "rid": "win",
-            "assetType": "runtime"
-          }
         }
       },
-      "System.Security.Principal.Windows/4.5.0": {
-        "runtimeTargets": {
-          "runtime/unix/lib/_._": {
-            "rid": "unix",
-            "assetType": "runtime"
-          },
-          "runtime/win/lib/_._": {
-            "rid": "win",
-            "assetType": "runtime"
-          }
-        }
-      },
+      "System.Security.Principal.Windows/4.5.0": {},
       "System.Text.Encoding/4.0.11": {
         "dependencies": {
           "System.Runtime": "4.3.1"
@@ -591,14 +564,14 @@
         }
       },
       "System.ValueTuple/4.4.0": {},
-      "Fifty.Lavu/1.0.0": {
+      "fifty.lavu/1.0.0": {
         "dependencies": {
           "Microsoft.Extensions.Configuration.Json": "2.2.0",
           "Newtonsoft.Json": "12.0.2",
           "System.Runtime.Extensions": "4.3.1"
         },
         "runtime": {
-          "Fifty.Lavu.dll": {}
+          "fifty.lavu.dll": {}
         }
       },
       "Fifty.Shared/1.0.0": {
@@ -614,12 +587,12 @@
       },
       "Fifty.Smartsheet/1.0.0": {
         "dependencies": {
-          "Fifty.Lavu": "1.0.0",
           "Fifty.Shared": "1.0.0",
           "Microsoft.Extensions.Configuration.Json": "2.2.0",
           "Newtonsoft.Json": "12.0.2",
           "System.Management": "4.5.0",
           "System.Runtime.Extensions": "4.3.1",
+          "fifty.lavu": "1.0.0",
           "smartsheet-csharp-sdk": "2.6.0"
         },
         "runtime": {
@@ -1082,7 +1055,7 @@
       "path": "system.valuetuple/4.4.0",
       "hashPath": "system.valuetuple.4.4.0.nupkg.sha512"
     },
-    "Fifty.Lavu/1.0.0": {
+    "fifty.lavu/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

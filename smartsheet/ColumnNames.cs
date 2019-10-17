@@ -13,5 +13,6 @@
 		public const string Friday = "Friday";
 		public const string Saturday = "Saturday";
 		public const string Sunday = "Sunday";
+		public const string AdditionalTips = "Additional Tips";
 	}
 }

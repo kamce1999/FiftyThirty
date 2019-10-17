@@ -16,3 +16,20 @@ C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\test-client\bin\Relea
 C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\test-client\bin\Release\netcoreapp2.2\DataModel.pdb
 C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\test-client\bin\Release\netcoreapp2.2\Fifty.Smartsheet.dll
 C:\Users\khepp\Documents\Visual Studio 2017\Projects\fifty\test-client\bin\Release\netcoreapp2.2\Fifty.Smartsheet.pdb
+C:\code\FiftyThirty\test-client\bin\Release\netcoreapp2.2\test-client.deps.json
+C:\code\FiftyThirty\test-client\bin\Release\netcoreapp2.2\test-client.runtimeconfig.json
+C:\code\FiftyThirty\test-client\bin\Release\netcoreapp2.2\test-client.runtimeconfig.dev.json
+C:\code\FiftyThirty\test-client\bin\Release\netcoreapp2.2\test-client.dll
+C:\code\FiftyThirty\test-client\bin\Release\netcoreapp2.2\test-client.pdb
+C:\code\FiftyThirty\test-client\bin\Release\netcoreapp2.2\Fifty.Lavu.dll
+C:\code\FiftyThirty\test-client\bin\Release\netcoreapp2.2\Fifty.Shared.dll
+C:\code\FiftyThirty\test-client\bin\Release\netcoreapp2.2\Fifty.Smartsheet.dll
+C:\code\FiftyThirty\test-client\bin\Release\netcoreapp2.2\Fifty.Shared.pdb
+C:\code\FiftyThirty\test-client\bin\Release\netcoreapp2.2\Fifty.Smartsheet.pdb
+C:\code\FiftyThirty\test-client\bin\Release\netcoreapp2.2\Fifty.Lavu.pdb
+C:\code\FiftyThirty\test-client\obj\Release\netcoreapp2.2\test-client.csprojAssemblyReference.cache
+C:\code\FiftyThirty\test-client\obj\Release\netcoreapp2.2\test-client.AssemblyInfoInputs.cache
+C:\code\FiftyThirty\test-client\obj\Release\netcoreapp2.2\test-client.AssemblyInfo.cs
+C:\code\FiftyThirty\test-client\obj\Release\netcoreapp2.2\test-client.csproj.CopyComplete
+C:\code\FiftyThirty\test-client\obj\Release\netcoreapp2.2\test-client.dll
+C:\code\FiftyThirty\test-client\obj\Release\netcoreapp2.2\test-client.pdb

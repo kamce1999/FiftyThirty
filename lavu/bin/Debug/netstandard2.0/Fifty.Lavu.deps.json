@@ -1,13 +1,13 @@
 {
   "runtimeTarget": {
     "name": ".NETStandard,Version=v2.0/",
-    "signature": "ca407fda82bc8fac0898cd20dc1190de3ab15a30"
+    "signature": ""
   },
   "compilationOptions": {},
   "targets": {
     ".NETStandard,Version=v2.0": {},
     ".NETStandard,Version=v2.0/": {
-      "Fifty.Lavu/1.0.0": {
+      "fifty.lavu/1.0.0": {
         "dependencies": {
           "Microsoft.Extensions.Configuration.Json": "2.2.0",
           "NETStandard.Library": "2.0.3",
@@ -15,7 +15,7 @@
           "System.Runtime.Extensions": "4.3.1"
         },
         "runtime": {
-          "Fifty.Lavu.dll": {}
+          "fifty.lavu.dll": {}
         }
       },
       "Microsoft.Extensions.Configuration/2.2.0": {
@@ -176,7 +176,7 @@
     }
   },
   "libraries": {
-    "Fifty.Lavu/1.0.0": {
+    "fifty.lavu/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

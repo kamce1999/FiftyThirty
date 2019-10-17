@@ -65,5 +65,8 @@ namespace Fifty.Lavu
 
         [Newtonsoft.Json.JsonProperty("ag_other", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public double AutoGratuityOther { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("server_id", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int ServerId { get; set; }
     }
 }

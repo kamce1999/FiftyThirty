@@ -515,7 +515,7 @@
           "lib/netcoreapp2.0/_._": {}
         }
       },
-      "Fifty.Lavu/1.0.0": {
+      "fifty.lavu/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
@@ -524,10 +524,10 @@
           "System.Runtime.Extensions": "4.3.1"
         },
         "compile": {
-          "bin/placeholder/Fifty.Lavu.dll": {}
+          "bin/placeholder/fifty.lavu.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Fifty.Lavu.dll": {}
+          "bin/placeholder/fifty.lavu.dll": {}
         }
       },
       "Fifty.Shared/1.0.0": {
@@ -1673,10 +1673,10 @@
         "version.txt"
       ]
     },
-    "Fifty.Lavu/1.0.0": {
+    "fifty.lavu/1.0.0": {
       "type": "project",
-      "path": "../lavu/Fifty.Lavu.csproj",
-      "msbuildProject": "../lavu/Fifty.Lavu.csproj"
+      "path": "../lavu/fifty.lavu.csproj",
+      "msbuildProject": "../lavu/fifty.lavu.csproj"
     },
     "Fifty.Shared/1.0.0": {
       "type": "project",
@@ -1686,13 +1686,13 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.2": [
-      "Fifty.Lavu >= 1.0.0",
       "Fifty.Shared >= 1.0.0",
       "Microsoft.Extensions.Configuration.Json >= 2.2.0",
       "Microsoft.NETCore.App >= 2.2.0",
       "Newtonsoft.Json >= 12.0.2",
       "System.Management >= 4.5.0",
       "System.Runtime.Extensions >= 4.3.1",
+      "fifty.lavu >= 1.0.0",
       "smartsheet-csharp-sdk >= 2.6.0"
     ]
   },
@@ -1772,10 +1772,16 @@
           }
         },
         "imports": [
-          "net461"
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48"
         ],
         "assetTargetFallback": true,
-        "warn": true
+        "warn": true,
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   },
@@ -1784,7 +1790,7 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Package 'smartsheet-csharp-sdk 2.6.0' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETCoreApp,Version=v2.2'. This package may not be fully compatible with your project.",
+      "message": "Package 'smartsheet-csharp-sdk 2.6.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v2.2'. This package may not be fully compatible with your project.",
       "libraryId": "smartsheet-csharp-sdk",
       "targetGraphs": [
         ".NETCoreApp,Version=v2.2"

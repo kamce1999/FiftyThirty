@@ -16,6 +16,7 @@ namespace Fifty.Smartsheet
         public string Position { get; set; }
         public float PayRate { get; set; }
 		public int RoleId { get; set; }
+        public double AdditionalTips { get; set; }
         public List<DailyHours> Hours { get; set; }
     }
 }

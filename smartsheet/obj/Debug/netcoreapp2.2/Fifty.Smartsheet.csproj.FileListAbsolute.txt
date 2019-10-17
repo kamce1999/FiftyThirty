@@ -11,7 +11,6 @@ C:\code\FiftyThirty\smartsheet\bin\Debug\netcoreapp2.2\Fifty.Smartsheet.deps.jso
 C:\code\FiftyThirty\smartsheet\bin\Debug\netcoreapp2.2\Fifty.Smartsheet.dll
 C:\code\FiftyThirty\smartsheet\bin\Debug\netcoreapp2.2\Fifty.Smartsheet.pdb
 C:\code\FiftyThirty\smartsheet\obj\Debug\netcoreapp2.2\Fifty.Smartsheet.csprojAssemblyReference.cache
-C:\code\FiftyThirty\smartsheet\obj\Debug\netcoreapp2.2\Fifty.Smartsheet.csproj.CoreCompileInputs.cache
 C:\code\FiftyThirty\smartsheet\obj\Debug\netcoreapp2.2\Fifty.Smartsheet.AssemblyInfoInputs.cache
 C:\code\FiftyThirty\smartsheet\obj\Debug\netcoreapp2.2\Fifty.Smartsheet.AssemblyInfo.cs
 C:\code\FiftyThirty\smartsheet\obj\Debug\netcoreapp2.2\Fifty.Smartsheet.dll
