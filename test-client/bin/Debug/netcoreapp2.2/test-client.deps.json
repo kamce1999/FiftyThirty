@@ -18,7 +18,8 @@
           "Newtonsoft.Json": "12.0.2",
           "System.Management": "4.5.0",
           "System.Runtime.Extensions": "4.3.1",
-          "fifty.lavu": "1.0.0"
+          "fifty.lavu": "1.0.0",
+          "smartsheet-csharp-sdk": "2.83.0"
         },
         "runtime": {
           "test-client.dll": {}
@@ -299,21 +300,14 @@
           }
         }
       },
-      "NLog/4.5.3": {
+      "NLog/4.6.3": {
         "runtime": {
           "lib/netstandard2.0/NLog.dll": {
             "assemblyVersion": "4.0.0.0",
-            "fileVersion": "4.5.3.7533"
+            "fileVersion": "4.6.3.9764"
           }
         }
       },
-      "NLog.Config/4.5.3": {
-        "dependencies": {
-          "NLog": "4.5.3",
-          "NLog.Schema": "4.5.3"
-        }
-      },
-      "NLog.Schema/4.5.3": {},
       "Remotion.Linq/2.2.0": {
         "dependencies": {
           "System.Collections": "4.0.11",
@@ -335,27 +329,24 @@
           }
         }
       },
-      "RestSharp/106.2.1": {
-        "dependencies": {
-          "System.ValueTuple": "4.4.0"
-        },
+      "RestSharp/106.6.9": {
         "runtime": {
           "lib/netstandard2.0/RestSharp.dll": {
-            "assemblyVersion": "106.2.1.0",
-            "fileVersion": "106.2.1.1"
+            "assemblyVersion": "106.6.9.0",
+            "fileVersion": "106.6.9.0"
           }
         }
       },
-      "smartsheet-csharp-sdk/2.6.0": {
+      "smartsheet-csharp-sdk/2.83.0": {
         "dependencies": {
-          "NLog.Config": "4.5.3",
+          "NLog": "4.6.3",
           "Newtonsoft.Json": "12.0.2",
-          "RestSharp": "106.2.1"
+          "RestSharp": "106.6.9"
         },
         "runtime": {
-          "lib/net452/smartsheet-csharp-sdk.dll": {
-            "assemblyVersion": "2.6.0.0",
-            "fileVersion": "2.6.0.0"
+          "lib/netstandard2.0/smartsheet-csharp-sdk.dll": {
+            "assemblyVersion": "2.83.0.0",
+            "fileVersion": "2.83.0.0"
           }
         }
       },
@@ -563,12 +554,12 @@
           "System.Runtime": "4.3.1"
         }
       },
-      "System.ValueTuple/4.4.0": {},
       "fifty.lavu/1.0.0": {
         "dependencies": {
           "Microsoft.Extensions.Configuration.Json": "2.2.0",
           "Newtonsoft.Json": "12.0.2",
-          "System.Runtime.Extensions": "4.3.1"
+          "System.Runtime.Extensions": "4.3.1",
+          "smartsheet-csharp-sdk": "2.83.0"
         },
         "runtime": {
           "fifty.lavu.dll": {}
@@ -579,7 +570,8 @@
           "Microsoft.Extensions.Configuration": "2.2.0",
           "Microsoft.Extensions.Configuration.Json": "2.2.0",
           "System.Management": "4.5.0",
-          "System.Runtime.Extensions": "4.3.1"
+          "System.Runtime.Extensions": "4.3.1",
+          "smartsheet-csharp-sdk": "2.83.0"
         },
         "runtime": {
           "Fifty.Shared.dll": {}
@@ -593,7 +585,7 @@
           "System.Management": "4.5.0",
           "System.Runtime.Extensions": "4.3.1",
           "fifty.lavu": "1.0.0",
-          "smartsheet-csharp-sdk": "2.6.0"
+          "smartsheet-csharp-sdk": "2.83.0"
         },
         "runtime": {
           "Fifty.Smartsheet.dll": {}
@@ -789,26 +781,12 @@
       "path": "newtonsoft.json/12.0.2",
       "hashPath": "newtonsoft.json.12.0.2.nupkg.sha512"
     },
-    "NLog/4.5.3": {
+    "NLog/4.6.3": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-/JYo07DnD3qLsEn1juvmPTkbd7+FUAYHt+zZgCPZSWwQ8b061vXdgpQSC2KKe2GJTAUs07YbU7tfhiyDBgANlA==",
-      "path": "nlog/4.5.3",
-      "hashPath": "nlog.4.5.3.nupkg.sha512"
-    },
-    "NLog.Config/4.5.3": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-C3JaHcgVG8AqCKpmYyMxLKDDVeHNf2ttn98+WJlvVSJC5Tv1Q24XGWtuE2Lgf8YPyUQCP3Fxz2Akrswr9PVyGw==",
-      "path": "nlog.config/4.5.3",
-      "hashPath": "nlog.config.4.5.3.nupkg.sha512"
-    },
-    "NLog.Schema/4.5.3": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-eC0lQlJ9CnUnmBOta5+1EpTQgJyZXMQffhaw4aJBHtUjkMkuMJQETma0WOfhPfdVg4Vzh9JOPKZIdGlX6WMsMw==",
-      "path": "nlog.schema/4.5.3",
-      "hashPath": "nlog.schema.4.5.3.nupkg.sha512"
+      "sha512": "sha512-DYbJKfpjciXc/y177fou0XsSB+ZsPFW63c3ZtrYNScU2Sw3j4o12zVpm7p30PCaaSUMLdn1iYF1KbdPcdR0Ofg==",
+      "path": "nlog/4.6.3",
+      "hashPath": "nlog.4.6.3.nupkg.sha512"
     },
     "Remotion.Linq/2.2.0": {
       "type": "package",
@@ -817,19 +795,19 @@
       "path": "remotion.linq/2.2.0",
       "hashPath": "remotion.linq.2.2.0.nupkg.sha512"
     },
-    "RestSharp/106.2.1": {
+    "RestSharp/106.6.9": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-YlL7/d6N0loTeI7BatX38snkSI/UhKSMPIWZ+rAxMMFM05QOKPySb43bNm/AUHmVca/FaNceOpgtZzY7Em8vNw==",
-      "path": "restsharp/106.2.1",
-      "hashPath": "restsharp.106.2.1.nupkg.sha512"
+      "sha512": "sha512-/IAQTwlnlQcjlIyvelf+rhQcCRPy/r/0MftpNbff/D7PZVnmVXE4AnHk/F4NJJJEZbI4M+QTglB+xFkAyzr+9A==",
+      "path": "restsharp/106.6.9",
+      "hashPath": "restsharp.106.6.9.nupkg.sha512"
     },
-    "smartsheet-csharp-sdk/2.6.0": {
+    "smartsheet-csharp-sdk/2.83.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-Y+Q6FdnrmJ03Bb7oRmdBtwbe7uJZoI11E7BcWSX1yuH746omG9IyTawVfPvijg4PRafaXeO1rCv5iTTW+XWavg==",
-      "path": "smartsheet-csharp-sdk/2.6.0",
-      "hashPath": "smartsheet-csharp-sdk.2.6.0.nupkg.sha512"
+      "sha512": "sha512-71L2uZJmzHMek8oZMpL/N9edODXGTBtbOlai3msKU28a1/SRcLHPTLFsMsHCHOsJXA56wgvFl1vqfU2g0z4S8A==",
+      "path": "smartsheet-csharp-sdk/2.83.0",
+      "hashPath": "smartsheet-csharp-sdk.2.83.0.nupkg.sha512"
     },
     "System.CodeDom/4.5.0": {
       "type": "package",
@@ -1047,13 +1025,6 @@
       "sha512": "sha512-k1S4Gc6IGwtHGT8188RSeGaX86Qw/wnrgNLshJvsdNUOPP9etMmo8S07c+UlOAx4K/xLuN9ivA1bD0LVurtIxQ==",
       "path": "system.threading.tasks/4.0.11",
       "hashPath": "system.threading.tasks.4.0.11.nupkg.sha512"
-    },
-    "System.ValueTuple/4.4.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-BahUww/+mdP4ARCAh2RQhQTg13wYLVrBb9SYVgW8ZlrwjraGCXHGjo0oIiUfZ34LUZkMMR+RAzR7dEY4S1HeQQ==",
-      "path": "system.valuetuple/4.4.0",
-      "hashPath": "system.valuetuple.4.4.0.nupkg.sha512"
     },
     "fifty.lavu/1.0.0": {
       "type": "project",

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using Fifty.Shared;
 using Newtonsoft.Json;
 using Smartsheet.Api;
@@ -16,19 +15,20 @@ namespace Fifty.Smartsheet
 		private static Dictionary<string, int> columnIndexMap = new Dictionary<string, int>();
 		private static Sheet tipOutSheet;
 		private static Sheet logSheet;
-		private static SmartsheetClient smartsheet;
+		private static SmartsheetClient smartSheet;
 		private static long tipOutSheetId;
 		private static long sheetIdLog;
 		private static string accessToken;
 
-		public static void Update(long sheetId, List<ServerHours> serverHours, List<SalesSummary> salesSummary, bool switchWeeks)
+		public static void Update(List<ServerHours> serverHours, List<SalesSummary> salesSummary, bool switchWeeks)
 		{
 			try
 			{
-				accessToken = ConfigurationVariables.SmartsheetToken;
-				tipOutSheetId = sheetId;
+				accessToken = ConfigurationVariables.SmartSheetToken;
+				
+				tipOutSheetId = ConfigurationVariables.SheetIdPeel;
 								
-				smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
+				smartSheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
 
 				InitializeLogSheet();
 
@@ -64,14 +64,14 @@ namespace Fifty.Smartsheet
                 NewName = $"Tip Out Model {lastMonday.ToShortDateString()} - {lastMonday.AddDays(6).ToShortDateString()}"
             };
         
-            smartsheet.SheetResources.CopySheet(tipOutSheetId, destination, new List<SheetCopyInclusion> { SheetCopyInclusion.ALL });
+            smartSheet.SheetResources.CopySheet(tipOutSheetId, destination, new List<SheetCopyInclusion> { SheetCopyInclusion.ALL });
         }
 
         private static void InitializeLogSheet()
 		{
 			sheetIdLog = ConfigurationVariables.SheetIdLog;
 
-			logSheet = smartsheet.SheetResources.GetSheet(sheetIdLog, null, null, null, null, null, null, null);
+			logSheet = smartSheet.SheetResources.GetSheet(sheetIdLog, null, null, null, null, null, null, null);
 			logColumnIdMap = new Dictionary<string, long>();
 
 			foreach (var column in logSheet.Columns)
@@ -85,7 +85,7 @@ namespace Fifty.Smartsheet
 
 		private static void InitializeTipOutSheet()
 		{
-			tipOutSheet = smartsheet.SheetResources.GetSheet(tipOutSheetId, new[] { SheetLevelInclusion.FORMAT }, null, null, null, null, null, null);
+			tipOutSheet = smartSheet.SheetResources.GetSheet(tipOutSheetId, new[] { SheetLevelInclusion.FORMAT }, null, null, null, null, null, null);
 
 			columnIdMap = new Dictionary<string, long>();
 			columnIndexMap = new Dictionary<string, int>();
@@ -152,7 +152,7 @@ namespace Fifty.Smartsheet
 				new Row { Id = serviceFeeRow.Id, Cells = serviceFee.Values.ToList() }
 			};
 
-			smartsheet.SheetResources.RowResources.UpdateRows(tipOutSheetId, rowsToUpdate);
+			smartSheet.SheetResources.RowResources.UpdateRows(tipOutSheetId, rowsToUpdate);
 		}
 		
 		private static void UpdateServerHours(IEnumerable<ServerHours> serverHours)
@@ -178,12 +178,12 @@ namespace Fifty.Smartsheet
 				if (row != null)
 				{
 					var rowToUpdate = new Row { Id = row.Id, Cells = cells };
-					smartsheet.SheetResources.RowResources.UpdateRows(tipOutSheetId, new[] { rowToUpdate });
+					smartSheet.SheetResources.RowResources.UpdateRows(tipOutSheetId, new[] { rowToUpdate });
 				}
 				else
 				{
 					var newRow = new Row { ParentId = parentRowId, Cells = cells };
-					smartsheet.SheetResources.RowResources.AddRows(tipOutSheetId, new[] { newRow });
+					smartSheet.SheetResources.RowResources.AddRows(tipOutSheetId, new[] { newRow });
 				}
 			}
 		}
@@ -196,7 +196,7 @@ namespace Fifty.Smartsheet
 
 			if (rowsToUpdate.Count > 0)
 			{
-				smartsheet.SheetResources.RowResources.UpdateRows(tipOutSheetId, rowsToUpdate);
+				smartSheet.SheetResources.RowResources.UpdateRows(tipOutSheetId, rowsToUpdate);
 			}
 		}
 
@@ -321,7 +321,7 @@ namespace Fifty.Smartsheet
 				}
 			};
 
-			smartsheet.SheetResources.RowResources.AddRows(sheetIdLog, new[] { newRow });
+			smartSheet.SheetResources.RowResources.AddRows(sheetIdLog, new[] { newRow });
 		}
     }
 }

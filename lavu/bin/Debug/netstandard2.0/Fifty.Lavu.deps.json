@@ -12,7 +12,8 @@
           "Microsoft.Extensions.Configuration.Json": "2.2.0",
           "NETStandard.Library": "2.0.3",
           "Newtonsoft.Json": "12.0.2",
-          "System.Runtime.Extensions": "4.3.1"
+          "System.Runtime.Extensions": "4.3.1",
+          "smartsheet-csharp-sdk": "2.83.0"
         },
         "runtime": {
           "fifty.lavu.dll": {}
@@ -120,6 +121,35 @@
           "lib/netstandard2.0/Newtonsoft.Json.dll": {
             "assemblyVersion": "12.0.0.0",
             "fileVersion": "12.0.2.23222"
+          }
+        }
+      },
+      "NLog/4.6.3": {
+        "runtime": {
+          "lib/netstandard2.0/NLog.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.6.3.9764"
+          }
+        }
+      },
+      "RestSharp/106.6.9": {
+        "runtime": {
+          "lib/netstandard2.0/RestSharp.dll": {
+            "assemblyVersion": "106.6.9.0",
+            "fileVersion": "106.6.9.0"
+          }
+        }
+      },
+      "smartsheet-csharp-sdk/2.83.0": {
+        "dependencies": {
+          "NLog": "4.6.3",
+          "Newtonsoft.Json": "12.0.2",
+          "RestSharp": "106.6.9"
+        },
+        "runtime": {
+          "lib/netstandard2.0/smartsheet-csharp-sdk.dll": {
+            "assemblyVersion": "2.83.0.0",
+            "fileVersion": "2.83.0.0"
           }
         }
       },
@@ -264,6 +294,27 @@
       "sha512": "sha512-rTK0s2EKlfHsQsH6Yx2smvcTCeyoDNgCW7FEYyV01drPlh2T243PR2DiDXqtC5N4GDm4Ma/lkxfW5a/4793vbA==",
       "path": "newtonsoft.json/12.0.2",
       "hashPath": "newtonsoft.json.12.0.2.nupkg.sha512"
+    },
+    "NLog/4.6.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-DYbJKfpjciXc/y177fou0XsSB+ZsPFW63c3ZtrYNScU2Sw3j4o12zVpm7p30PCaaSUMLdn1iYF1KbdPcdR0Ofg==",
+      "path": "nlog/4.6.3",
+      "hashPath": "nlog.4.6.3.nupkg.sha512"
+    },
+    "RestSharp/106.6.9": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/IAQTwlnlQcjlIyvelf+rhQcCRPy/r/0MftpNbff/D7PZVnmVXE4AnHk/F4NJJJEZbI4M+QTglB+xFkAyzr+9A==",
+      "path": "restsharp/106.6.9",
+      "hashPath": "restsharp.106.6.9.nupkg.sha512"
+    },
+    "smartsheet-csharp-sdk/2.83.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-71L2uZJmzHMek8oZMpL/N9edODXGTBtbOlai3msKU28a1/SRcLHPTLFsMsHCHOsJXA56wgvFl1vqfU2g0z4S8A==",
+      "path": "smartsheet-csharp-sdk/2.83.0",
+      "hashPath": "smartsheet-csharp-sdk.2.83.0.nupkg.sha512"
     },
     "System.Buffers/4.4.0": {
       "type": "package",

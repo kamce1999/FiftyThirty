@@ -9,11 +9,20 @@
         "PeelFolderId": "3725417489164164",
         "LavuConfigPeel": "eyJEYXRhTmFtZSI6InBlZWwiLCJLZXkiOiJoNnlJa0hOY3pFcHdmTm5IMndXTCIsIlRva2VuIjoieFFZcWNlOEVJbUFwMmhzeG40VFEifQ==",
         "SheetIdPeel": "1854968576665476",
-        "SmartsheetToken": "lsazvdkpo5338ett4b2rpdrvm2"
+        "SmartSheetToken": "lsazvdkpo5338ett4b2rpdrvm2"
       }
     },
     "Prod": {
-      "commandName": "Executable"
+      "commandName": "Executable",
+      "environmentVariables": {
+        "SheetIdLog": "2900180946184068",
+        "StartTime": "12:00:00",
+        "Frequency": "00:01:00",
+        "PeelFolderId": "3725417489164164",
+        "LavuConfigPeel": "eyJEYXRhTmFtZSI6InBlZWwiLCJLZXkiOiJoNnlJa0hOY3pFcHdmTm5IMndXTCIsIlRva2VuIjoieFFZcWNlOEVJbUFwMmhzeG40VFEifQ==",
+        "SheetIdPeel": "1854968576665476",
+        "SmartSheetToken": "lsazvdkpo5338ett4b2rpdrvm2"
+      }
     }
   }
 }

@@ -5,23 +5,46 @@ using System.Linq;
 using Fifty.Lavu;
 using Fifty.Shared;
 using Fifty.Smartsheet;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 
 namespace test_client
 {
     public class Program
     {
-        private static string dataPath = "C:\\code\\breadcrumb";
-
-        private static string location = string.Empty;
+        public static IConfigurationRoot configuration;
+        private static bool overrideRunTimeCheck { get; set; }
+        private static bool switchWeeks { get; set; }
 
         public static void Main(string[] args)
         {
             try
             {
-                Console.WriteLine("updating peel tip out......");
-                location = "peel";
-                DoWork(GetLavuHeader(ConfigurationVariables.LavuConfigPeel), ConfigurationVariables.SheetIdPeel);
+	            Console.BackgroundColor = ConsoleColor.Black;
+				overrideRunTimeCheck = args.Contains("override");
+	            switchWeeks = args.Contains("switchweeks");
+	             
+	            Console.WriteLine($"Override Time: {overrideRunTimeCheck}");
+	            Console.WriteLine($"Switch Weeks: {switchWeeks}");
+				Console.WriteLine("Y to continue");
+
+
+				var v = Console.ReadKey().Key;
+
+				if (v != ConsoleKey.Y)
+				{
+					Console.BackgroundColor = ConsoleColor.Red;
+					return;
+				}
+
+				Console.WriteLine(Convert.ToChar(v));
+
+				Console.WriteLine("updating peel tip out......");
+
+				ConfigureServices();
+                
+                DoWork();
 
                 Console.WriteLine("done!");
             }
@@ -32,12 +55,34 @@ namespace test_client
             }
         }
 
-        public static void DoWork(LavuApiHeaderValues headerValues, long sheetId)
+
+        private static void ConfigureServices()
         {
-            var switchWeeks = false; //DateTime.Now.Hour == 1 && DateTime.Now.DayOfWeek == DayOfWeek.Monday;
-            
-           // var reader = new LavuReader(DateTime.Now.AddDays(-6));
-            var reader = new LavuReader(DateTime.Now);
+            // Build configuration
+            configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetParent(AppContext.BaseDirectory).FullName)
+				.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .Build();
+
+            var sheetId = configuration.GetValue<string>("ConfigValues:SheetIdPeel");
+        }
+
+        public static void DoWork()
+        {
+			if (!overrideRunTimeCheck && !ValidRunTimes())
+			{
+				Console.WriteLine("Invalid run time");
+				return;
+			}
+
+			var headerValues = GetLavuHeader(ConfigurationVariables.LavuConfigPeel);
+
+			if (DateTime.Now.Hour == 1 && DateTime.Now.DayOfWeek == DayOfWeek.Monday)
+			{
+				switchWeeks = true;
+			}
+			
+            var reader = new LavuReader(DateTime.Now.AddDays(-1));
             
             var classes = reader.GetTable<EmployeeClasses>(headerValues, "emp_classes", null).Result.Select(s => s.row).ToList();
             var orders = reader.GetTable<Orders>(headerValues, "orders", "closed").Result.Select(s => s.row).ToList();
@@ -46,10 +91,29 @@ namespace test_client
             punches.ForEach(p => p.DayOfWeek = p.Time.DayOfWeek);
 
             var serverHours = GetServerSummary(punches, classes, orders);
-
             var orderSummary = GetOrderSummary(orders);
 
-            TipoutUpdater.Update(sheetId, serverHours, orderSummary, switchWeeks);
+            TipoutUpdater.Update(serverHours, orderSummary, switchWeeks);
+        }
+
+        private static bool ValidRunTimes()
+        {
+	        var mstDate = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.UtcNow, "Mountain Standard Time");
+			
+			switch (mstDate.DayOfWeek)
+	        {
+				case DayOfWeek.Saturday:
+				case DayOfWeek.Sunday:
+			        return mstDate.Hour >= 12 && mstDate.Hour <= 23;
+		        case DayOfWeek.Monday:
+		        case DayOfWeek.Tuesday:
+		        case DayOfWeek.Wednesday:
+		        case DayOfWeek.Thursday:
+		        case DayOfWeek.Friday:
+					return mstDate.Hour >= 16 && mstDate.Hour <= 23;
+				default:
+			        throw new ArgumentOutOfRangeException();
+	        }
         }
 
         private static LavuApiHeaderValues GetLavuHeader(string encodedData)
@@ -121,7 +185,7 @@ namespace test_client
         private static void WriteData<T>(ICollection<T> data)
         {
             var type = typeof(T);
-            var path = Path.Combine(dataPath, $"{type.Name}_{location}_{DateTime.Now.Ticks}.csv");
+            var path = Path.Combine(AppContext.BaseDirectory, $"{type.Name}_{DateTime.Now.Ticks}.csv");
             if (!File.Exists(path))
             {
                 var properties = type.GetProperties().AsQueryable().Select(p => p.Name);

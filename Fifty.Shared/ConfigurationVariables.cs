@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 
 namespace Fifty.Shared
 {
@@ -7,15 +6,12 @@ namespace Fifty.Shared
 	{
 		public static string LavuConfigPeel => GetStringValue("LavuConfigPeel");
 		
-		public static string SmartsheetToken => GetStringValue("SmartsheetToken");
+		public static string SmartSheetToken => GetStringValue("SmartSheetToken");
 		
 		public static long SheetIdLog => GetLongValue("SheetIdLog");
 
 		public static long SheetIdPeel => GetLongValue("SheetIdPeel");
-		public static long PeelFolderId => GetLongValue("PeelFolderId");
-		public static string StartTime => GetStringValue("StartTime");
-		public static string Frequency => GetStringValue("Frequency");
-
+		
 		public static string GetStringValue(string key)
 		{
 			var value = Environment.GetEnvironmentVariable(key);
@@ -24,7 +20,7 @@ namespace Fifty.Shared
 				return value;
 			}
 
-			throw new Exception($"Configuration excption - missing {key} - check launchSettings.json");
+			throw new Exception($"Configuration exception - missing {key} - check launchSettings.json");
 		}
 
 		public static long GetLongValue(string key)
@@ -35,7 +31,7 @@ namespace Fifty.Shared
 				return parsedValue;
 			}
 
-			throw new Exception($"Configuration excption - missing {key} - check launchSettings.json");
+			throw new Exception($"Configuration exception - missing {key} - check launchSettings.json");
 		}
 	}
 }

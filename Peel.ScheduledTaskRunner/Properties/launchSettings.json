@@ -1,0 +1,10 @@
+﻿{
+  "profiles": {
+    "Peel.ScheduledTaskRunner": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

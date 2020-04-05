@@ -142,6 +142,50 @@
           "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         }
       },
+      "NLog/4.6.3": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/NLog.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/NLog.dll": {}
+        }
+      },
+      "RestSharp/106.6.9": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/RestSharp.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/RestSharp.dll": {}
+        }
+      },
+      "smartsheet-csharp-sdk/2.83.0": {
+        "type": "package",
+        "dependencies": {
+          "NLog": "4.6.3",
+          "Newtonsoft.Json": "12.0.2",
+          "RestSharp": "106.6.9"
+        },
+        "compile": {
+          "lib/netstandard2.0/smartsheet-csharp-sdk.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/smartsheet-csharp-sdk.dll": {}
+        },
+        "contentFiles": {
+          "contentFiles/any/netstandard2.0/NLog.config": {
+            "buildAction": "Content",
+            "codeLanguage": "any",
+            "copyToOutput": false
+          },
+          "contentFiles/any/netstandard2.0/icons/logo.png": {
+            "buildAction": "Content",
+            "codeLanguage": "any",
+            "copyToOutput": false
+          }
+        }
+      },
       "System.Buffers/4.4.0": {
         "type": "package",
         "compile": {
@@ -499,6 +543,75 @@
         "newtonsoft.json.nuspec"
       ]
     },
+    "NLog/4.6.3": {
+      "sha512": "DYbJKfpjciXc/y177fou0XsSB+ZsPFW63c3ZtrYNScU2Sw3j4o12zVpm7p30PCaaSUMLdn1iYF1KbdPcdR0Ofg==",
+      "type": "package",
+      "path": "nlog/4.6.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/monoandroid44/NLog.dll",
+        "lib/monoandroid44/NLog.xml",
+        "lib/net35/NLog.dll",
+        "lib/net35/NLog.xml",
+        "lib/net40-client/NLog.dll",
+        "lib/net40-client/NLog.xml",
+        "lib/net45/NLog.dll",
+        "lib/net45/NLog.xml",
+        "lib/netstandard1.3/NLog.dll",
+        "lib/netstandard1.3/NLog.xml",
+        "lib/netstandard1.5/NLog.dll",
+        "lib/netstandard1.5/NLog.xml",
+        "lib/netstandard2.0/NLog.dll",
+        "lib/netstandard2.0/NLog.xml",
+        "lib/sl4/NLog.dll",
+        "lib/sl4/NLog.xml",
+        "lib/sl5/NLog.dll",
+        "lib/sl5/NLog.xml",
+        "lib/wp8/NLog.dll",
+        "lib/wp8/NLog.xml",
+        "lib/xamarinios10/NLog.dll",
+        "lib/xamarinios10/NLog.xml",
+        "nlog.4.6.3.nupkg.sha512",
+        "nlog.nuspec"
+      ]
+    },
+    "RestSharp/106.6.9": {
+      "sha512": "/IAQTwlnlQcjlIyvelf+rhQcCRPy/r/0MftpNbff/D7PZVnmVXE4AnHk/F4NJJJEZbI4M+QTglB+xFkAyzr+9A==",
+      "type": "package",
+      "path": "restsharp/106.6.9",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net452/RestSharp.dll",
+        "lib/net452/RestSharp.xml",
+        "lib/netstandard2.0/RestSharp.dll",
+        "lib/netstandard2.0/RestSharp.xml",
+        "restsharp.106.6.9.nupkg.sha512",
+        "restsharp.nuspec"
+      ]
+    },
+    "smartsheet-csharp-sdk/2.83.0": {
+      "sha512": "71L2uZJmzHMek8oZMpL/N9edODXGTBtbOlai3msKU28a1/SRcLHPTLFsMsHCHOsJXA56wgvFl1vqfU2g0z4S8A==",
+      "type": "package",
+      "path": "smartsheet-csharp-sdk/2.83.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "content/NLog.config",
+        "content/icons/logo.png",
+        "contentFiles/any/net452/NLog.config",
+        "contentFiles/any/net452/icons/logo.png",
+        "contentFiles/any/netstandard2.0/NLog.config",
+        "contentFiles/any/netstandard2.0/icons/logo.png",
+        "lib/net452/smartsheet-csharp-sdk.dll",
+        "lib/net452/smartsheet-csharp-sdk.xml",
+        "lib/netstandard2.0/smartsheet-csharp-sdk.dll",
+        "lib/netstandard2.0/smartsheet-csharp-sdk.xml",
+        "smartsheet-csharp-sdk.2.83.0.nupkg.sha512",
+        "smartsheet-csharp-sdk.nuspec"
+      ]
+    },
     "System.Buffers/4.4.0": {
       "sha512": "AwarXzzoDwX6BgrhjoJsk6tUezZEozOT5Y9QKF94Gl4JK91I4PIIBkBco9068Y9/Dra8Dkbie99kXB8+1BaYKw==",
       "type": "package",
@@ -795,7 +908,8 @@
       "Microsoft.Extensions.Configuration.Json >= 2.2.0",
       "NETStandard.Library >= 2.0.3",
       "Newtonsoft.Json >= 12.0.2",
-      "System.Runtime.Extensions >= 4.3.1"
+      "System.Runtime.Extensions >= 4.3.1",
+      "smartsheet-csharp-sdk >= 2.83.0"
     ]
   },
   "packageFolders": {
@@ -805,9 +919,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\code\\FiftyThirty\\lavu\\Fifty.Lavu.csproj",
-      "projectName": "Fifty.Lavu",
-      "projectPath": "C:\\code\\FiftyThirty\\lavu\\Fifty.Lavu.csproj",
+      "projectUniqueName": "C:\\code\\FiftyThirty\\lavu\\fifty.lavu.csproj",
+      "projectName": "fifty.lavu",
+      "projectPath": "C:\\code\\FiftyThirty\\lavu\\fifty.lavu.csproj",
       "packagesPath": "C:\\Users\\khepp\\.nuget\\packages\\",
       "outputPath": "C:\\code\\FiftyThirty\\lavu\\obj\\",
       "projectStyle": "PackageReference",
@@ -823,7 +937,8 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "https://api.nuget.org/v3/index.json": {}
+        "https://api.nuget.org/v3/index.json": {},
+        "https://artifactory.trimble.tools/artifactory/api/nuget/TrimbleAg-NuGet": {}
       },
       "frameworks": {
         "netstandard2.0": {
@@ -856,6 +971,10 @@
           "System.Runtime.Extensions": {
             "target": "Package",
             "version": "[4.3.1, )"
+          },
+          "smartsheet-csharp-sdk": {
+            "target": "Package",
+            "version": "[2.83.0, )"
           }
         },
         "imports": [
@@ -868,7 +987,7 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
       }
     }
   }
