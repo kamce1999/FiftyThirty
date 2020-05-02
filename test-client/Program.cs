@@ -21,25 +21,6 @@ namespace test_client
         {
             try
             {
-	            Console.BackgroundColor = ConsoleColor.Black;
-				overrideRunTimeCheck = args.Contains("override");
-	            switchWeeks = args.Contains("switchweeks");
-	             
-	            Console.WriteLine($"Override Time: {overrideRunTimeCheck}");
-	            Console.WriteLine($"Switch Weeks: {switchWeeks}");
-				Console.WriteLine("Y to continue");
-
-
-				var v = Console.ReadKey().Key;
-
-				if (v != ConsoleKey.Y)
-				{
-					Console.BackgroundColor = ConsoleColor.Red;
-					return;
-				}
-
-				Console.WriteLine(Convert.ToChar(v));
-
 				Console.WriteLine("updating peel tip out......");
 
 				ConfigureServices();
@@ -69,19 +50,8 @@ namespace test_client
 
         public static void DoWork()
         {
-			if (!overrideRunTimeCheck && !ValidRunTimes())
-			{
-				Console.WriteLine("Invalid run time");
-				return;
-			}
-
 			var headerValues = GetLavuHeader(ConfigurationVariables.LavuConfigPeel);
-
-			if (DateTime.Now.Hour == 1 && DateTime.Now.DayOfWeek == DayOfWeek.Monday)
-			{
-				switchWeeks = true;
-			}
-			
+            
             var reader = new LavuReader(DateTime.Now.AddDays(-1));
             
             var classes = reader.GetTable<EmployeeClasses>(headerValues, "emp_classes", null).Result.Select(s => s.row).ToList();

@@ -34,11 +34,11 @@ namespace Fifty.Smartsheet
 
 				InitializeTipOutSheet();
 
-                CopyLastWeek(switchWeeks);
-
 				UpdateServerHours(serverHours);
 
 				UpdateDailySales(salesSummary);
+
+				CopyLastWeek();
 
 				LogMessage(LogType.Info, $"Processing complete for: {tipOutSheet.Name}");
 			}
@@ -48,22 +48,24 @@ namespace Fifty.Smartsheet
 			}
 		}
 
-        public static void CopyLastWeek(bool switchWeeks)
+        public static void CopyLastWeek()
         {
-            if (!switchWeeks)
-            {
-                return;
-            }
-
             var lastMonday = DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek - 6);
 
+            var sheetName = $"Tip Out Model {lastMonday.ToShortDateString()} - {lastMonday.AddDays(6).ToShortDateString()}";
+
+            if (smartSheet.SheetResources.ListSheets(null, null, null).Data.Any(it => it.Name == sheetName) || DateTime.UtcNow.DayOfWeek != DayOfWeek.Monday)
+            {
+	            return;
+            }
+
+			Console.WriteLine("Copying last week!");
             var destination = new ContainerDestination
             {
-                DestinationId = 3725417489164164,
-                DestinationType = DestinationType.FOLDER,
-                NewName = $"Tip Out Model {lastMonday.ToShortDateString()} - {lastMonday.AddDays(6).ToShortDateString()}"
+	            DestinationId = 3725417489164164,
+	            DestinationType = DestinationType.FOLDER,
+	            NewName = $"Tip Out Model {lastMonday.ToShortDateString()} - {lastMonday.AddDays(6).ToShortDateString()}"
             };
-        
             smartSheet.SheetResources.CopySheet(tipOutSheetId, destination, new List<SheetCopyInclusion> { SheetCopyInclusion.ALL });
         }
 
